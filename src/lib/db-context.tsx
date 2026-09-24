@@ -1,10 +1,11 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useRef, ReactNode, useCallback } from "react";
-import { supabase } from "@/lib/supabase";
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from "react";
+import { supabase, Category, Tag } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth-context";
 import { Product, Sale, Expense } from "@/data/products";
-import { Category, Tag } from "@/lib/supabase";
+import { getErrorMessage } from "@/lib/errors";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 
 const LOG_PREFIX = "[DB]";
 const LS_CATEGORIES = "fn_dash_categories";
@@ -126,8 +127,8 @@ export function DbProvider({ children }: { children: ReactNode }) {
         supabase.from("expenses").select("id, data"),
       ]);
 
-      let catRes = { data: null as any, error: null as any };
-      let tagRes = { data: null as any, error: null as any };
+      let catRes: { data: Category[] | null; error: unknown } = { data: null, error: null };
+      let tagRes: { data: Tag[] | null; error: unknown } = { data: null, error: null };
       let catTableExists = false;
       let tagTableExists = false;
 
@@ -264,7 +265,7 @@ export function DbProvider({ children }: { children: ReactNode }) {
       })
       .subscribe();
 
-    let catChannel: any = null;
+    let catChannel: RealtimeChannel | null = null;
     try {
       catChannel = supabase
         .channel("categories-changes")
@@ -276,7 +277,7 @@ export function DbProvider({ children }: { children: ReactNode }) {
         .subscribe();
     } catch {}
 
-    let tagChannel: any = null;
+    let tagChannel: RealtimeChannel | null = null;
     try {
       tagChannel = supabase
         .channel("tags-changes")
@@ -379,9 +380,9 @@ export function DbProvider({ children }: { children: ReactNode }) {
         }
         log("addCategory: sucesso (Supabase)", { id: data.id });
         return { data };
-      } catch (e: any) {
+      } catch (e: unknown) {
         logError("addCategory exception", e);
-        return { data: null, error: e?.message || "Erro de conexão" };
+        return { data: null, error: getErrorMessage(e, "Erro de conexão") };
       }
     }
 

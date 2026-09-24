@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z, ZodSchema } from "zod";
+import { ZodSchema } from "zod";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 // =============================================

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useMemo } from "react";
 import { Product, calcMargin, calcUnitProfit, CHANNELS } from "@/data/products";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Edit3, Trash2, ExternalLink, ShoppingCart, Save, Upload, TrendingUp, Package, DollarSign, ImageIcon, Download } from "lucide-react";
 import { useDb } from "@/lib/db-context";
 

@@ -1,4 +1,4 @@
-import { Product, ProductVariation } from "@/data/products";
+import { Product } from "@/data/products";
 
 // =============================================
 // Export to Shopee CSV format

@@ -4,6 +4,8 @@ import { createContext, useContext, useEffect, useState, ReactNode, useCallback,
 import { supabase, Profile } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
 
+export type AuthResult = { error?: string; success?: string };
+
 const LOG_PREFIX = "[AUTH]";
 
 function log(msg: string, data?: unknown) {
@@ -202,6 +204,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       log("AuthProvider: removendo realtime subscription");
       supabase.removeChannel(channel);
     };
+  // only user?.id intentionally — reiniciar por objeto user causaria re-subscribes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
   const refreshProfile = useCallback(async () => {
@@ -215,7 +219,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user]);
 
-  async function signIn(email: string, password: string) {
+  async function signIn(email: string, password: string): Promise<AuthResult> {
     log(`signIn: tentando login para ${email}`);
     try {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -225,13 +229,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       log("signIn: login bem-sucedido");
       return {};
-    } catch (e: any) {
+    } catch (e: unknown) {
       logError("signIn exception", e);
       return { error: "Erro de conexão. Verifique sua internet e tente novamente." };
     }
   }
 
-  async function signUp(email: string, password: string, username?: string) {
+  async function signUp(email: string, password: string, username?: string): Promise<AuthResult> {
     log(`signUp: criando conta para ${email}`);
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -256,7 +260,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       log("signUp: conta criada com sucesso");
       return {};
-    } catch (e: any) {
+    } catch (e: unknown) {
       logError("signUp exception", e);
       return { error: "Erro de conexão. Verifique sua internet e tente novamente." };
     }

@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { Product, Sale, CHANNELS, PAYMENT_METHODS, PaymentMethod } from "@/data/products";
 import { motion } from "framer-motion";
-import { X, ShoppingCart, CreditCard, Banknote, Smartphone, DollarSign } from "lucide-react";
+import { X, ShoppingCart, CreditCard, Smartphone, DollarSign } from "lucide-react";
 
 interface SaleFormModalProps {
   product: Product;
   onClose: () => void;
-  onSave: (sale: Sale, newStock: number) => void;
+  onSave: (sale: Sale) => void;
   userName?: string;
   userAvatar?: string;
 }
@@ -49,7 +49,7 @@ export function SaleFormModal({ product, onClose, onSave, userName, userAvatar }
       registeredBy: userName || "",
       registeredByAvatar: userAvatar || "",
     };
-    onSave(sale, product.stock - qty);
+    onSave(sale);
   };
 
   return (

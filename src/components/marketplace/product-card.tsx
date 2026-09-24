@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Product, calcMargin, calcUnitProfit } from "@/data/products";
+import { Product, calcUnitProfit } from "@/data/products";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Eye, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, Eye } from "lucide-react";
 import { useDb } from "@/lib/db-context";
 
 interface ProductCardProps {
@@ -15,7 +15,6 @@ interface ProductCardProps {
 export function ProductCard({ product, onClick, index = 0 }: ProductCardProps) {
   const [imgIdx, setImgIdx] = useState(0);
   const { categories, tags } = useDb();
-  const margin = calcMargin(product.amount, product.cost);
   const profit = calcUnitProfit(product.amount, product.cost, product.commissionPct, product.shipping);
   const isLow = (product.stock || 0) <= (product.minStock || 5);
   const isOut = product.stock === 0;

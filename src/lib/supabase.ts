@@ -1,9 +1,25 @@
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
 
-const supabaseUrl = "https://rezvmfcbsossxwynlnce.supabase.co";
-const supabaseAnonKey = "sb_publishable_Ng4zcxmxK357tNMpklC_0w_y9JWUh_c";
+// Valores públicos (publishable) — sobrescritos por variáveis de ambiente.
+// Alvo: NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY
+// Atenção: os valores abaixo já circularam em commit público. Rotacione as
+// chaves no Supabase Dashboard e use apenas env vars daqui em diante.
+const FALLBACK_URL = "https://rezvmfcbsossxwynlnce.supabase.co";
+const FALLBACK_ANON_KEY = "sb_publishable_Ng4zcxmxK357tNMpklC_0w_y9JWUh_c";
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_URL;
+export const supabaseAnonKey =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_ANON_KEY;
+
+// Sessão persistida em cookie (nome fixo) p/ permitir o guard server-side
+// em src/proxy.ts. Cookie HTTP-only no padrão do @supabase/ssr.
+export const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
+  cookieOptions: {
+    name: "fn-dash-auth-token",
+    maxAge: 60 * 60 * 24 * 30,
+    sameSite: "lax",
+  },
+});
 
 export type Json =
   | string

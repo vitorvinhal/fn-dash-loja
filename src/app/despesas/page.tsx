@@ -9,11 +9,13 @@ import { EXPENSE_CATEGORIES, Expense } from "@/data/products";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home, Droplets, Wifi, Zap, FileText, Plus, Trash2, Edit3,
-  CheckCircle2, Circle, DollarSign, TrendingDown, Loader2,
-  Receipt, Calendar, AlertTriangle, ShoppingBag, Save
+  CheckCircle2, DollarSign, TrendingDown, Loader2,
+  Receipt, AlertTriangle, ShoppingBag, Save
 } from "lucide-react";
 
-const CATEGORY_ICONS: Record<string, any> = {
+import type { LucideIcon } from "lucide-react";
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
   "Aluguel": Home,
   "Água": Droplets,
   "Luz": Zap,

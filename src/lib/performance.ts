@@ -55,15 +55,7 @@ export function measureLongTasks(
 export function measureLayoutThrashing(): PerformanceObserver | null {
   if (typeof PerformanceObserver === "undefined") return null;
 
-  let count = 0;
-
-  const observer = new PerformanceObserver((list) => {
-    for (const entry of list.getEntries()) {
-      if (entry.entryType === "layout" || entry.name === "layout") {
-        count++;
-      }
-    }
-  });
+  const observer = new PerformanceObserver(() => {});
 
   try {
     observer.observe({ entryTypes: ["layout"] });

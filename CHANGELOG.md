@@ -5,6 +5,54 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ---
 
+## [3.0.7] — 2026-09-24
+
+### Adicionado
+- **Endurecimento de segurança das rotas de admin**
+  - `/api/admin/update-user` e `/api/setup/tables` agora exigem `requireAdmin` (Bearer token + role `admin`)
+  - Página de admin envia `Authorization: Bearer` nas chamadas para essas rotas
+- **Guard server-side de rota**: `src/proxy.ts` (nova convenção do Next 16, substitui `middleware`)
+  protege `/admin` exigindo cookie de sessão — redireciona para `/login` quando ausente
+- **Sessão em cookie**: cliente Supabase migrado para `@supabase/ssr` (`createBrowserClient`),
+  cookie `fn-dash-auth-token` — permite o guard acima e é o padrão oficial
+- **Config por env vars**: `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+  definidas na Vercel (produção + preview) e `.env.local` (local); valores antigos mantidos
+  apenas como fallback com aviso de rotação
+- **Migração de RLS** `supabase_security_hardening.sql`: policies de products/sales/expenses/
+  channels/categories/tags/profiles/storage agora exigem usuário autenticado; gravação no
+  próprio perfil ou admin; storage de avatares restrito (leitura pública, escrita autenticada,
+  remoção só do próprio avatar)
+- `src/app/error.tsx` (error boundary global) e `src/app/not-found.tsx` (404)
+- Helper `src/lib/errors.ts` (`getErrorMessage`) para tipos de erro sem `any`
+
+### Modificado
+- **Lint zerado em erros**: 48 erros → 0. Corrigidos `no-explicit-any` (≈40), tipos de
+  `ChartTooltip` (interface), `static-components` (EmptyChart movido para o módulo),
+  `no-children-prop` (renomeado para `subCategories`), `set-state-in-effect`
+  (lazy-init + hydration controlada), `no-require-imports` (script Node legítimo)
+- **Warnings reduzidos**: 68 → 18 (restam apenas sugestões de desempenho `no-img-element`)
+- **Código morto removido**: `inventory-table`, `category-nav`, `aether-dock`,
+  `marque-toggle` (+ CSS correspondente em `globals.css`)
+- **Importações e locais não usados removidos** em 15+ arquivos
+- `ThemeProvider` sem `setState` em effect (lazy init de tema + aplicação de classes)
+- Sidebar: `window.location.href` → `router.push`
+
+### Corrigido
+- `export type AuthResult` declarado dentro do componente `AuthProvider` (quebrava build)
+
+### Notas Técnicas
+- **Usuários precisam fazer login de novo** após o deploy: a sessão passou de `localStorage`
+  para cookie. Reversível mantendo-se o padrão antigo caso prefira.
+- **Aplicar SQL obrigatório no Supabase** (SQL Editor): `supabase_security_hardening.sql`.
+  Sem ele, as tabelas continuam com RLS aberto.
+- **Rotacionar** as chaves publicadas:
+  - Vercel: criar novo token em vercel.com/account/tokens e revogar o exposto em `AGENTS.md` antigo
+  - Supabase: a chave anon atual circular no repositório (histórico público) — regenerar no
+    dashboard e atualizar `NEXT_PUBLIC_SUPABASE_ANON_KEY` na Vercel e em `.env.local`
+- Testes unitários: 22/22 passando. Build de produção: OK.
+
+---
+
 ## [3.0.0] — 2026-09-07
 
 ### Adicionado

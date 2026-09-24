@@ -1,13 +1,13 @@
 "use client";
 
-import { useLayout, LayoutStyle, ColorMode, LAYOUT_THEMES } from "@/lib/layout-context";
+import { useLayout, LayoutStyle, LAYOUT_THEMES } from "@/lib/layout-context";
 import { LayoutThumbnail } from "./layout-thumbnail";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Sparkles, LayoutGrid, Palette } from "lucide-react";
+import { Sun, Moon, LayoutGrid, Palette } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function LayoutSelector() {
-  const { layout, colorMode, setLayout, setColorMode, isTransitioning } = useLayout();
+  const { layout, colorMode, setLayout, setColorMode } = useLayout();
   const currentTheme = LAYOUT_THEMES[layout];
 
   const layouts: LayoutStyle[] = ["modern", "compact", "classic"];

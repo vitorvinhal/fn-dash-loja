@@ -329,6 +329,8 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const transitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Hydração dos temas de layout a partir do profile (fonte externa/assíncrona).
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (profile?.settings) {
       const savedLayout = profile.settings.layout as LayoutStyle;
@@ -337,6 +339,7 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
       if (savedColorMode) setColorModeState(savedColorMode);
     }
   }, [profile?.settings]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const triggerTransition = useCallback(() => {
     setIsTransitioning(true);

@@ -7,10 +7,10 @@ import { ProductDetailModal } from "./product-detail-modal";
 import { ProductFormModal } from "./product-form-modal";
 import { SaleFormModal } from "./sale-form-modal";
 import { motion } from "framer-motion";
-import { Search, Plus, X, Filter, Download, FileSpreadsheet, Tag } from "lucide-react";
+import { Search, Plus, X, Filter, Download, FileSpreadsheet } from "lucide-react";
 import { useDb } from "@/lib/db-context";
 import { useAuth } from "@/lib/auth-context";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { exportToShopee, exportToTikTok, exportStockReport } from "@/lib/export-marketplace";
 
 interface MarketplaceGridProps {
@@ -21,7 +21,6 @@ export function MarketplaceGrid({ initialProductId }: MarketplaceGridProps) {
   const { products, addProduct, updateProduct, deleteProduct, addSale, categories, tags } = useDb();
   const { profile } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [search, setSearch] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState("todas");
   const [selectedTagId, setSelectedTagId] = useState("todas");
@@ -57,9 +56,12 @@ export function MarketplaceGrid({ initialProductId }: MarketplaceGridProps) {
     if (initialProductId && !productOpened) {
       const p = products.find((pr) => pr.id === initialProductId);
       if (p) {
-        setSelectedProduct(p);
-        setProductOpened(true);
-        router.replace("/marketplace", { scroll: false });
+        const timer = setTimeout(() => {
+          setSelectedProduct(p);
+          setProductOpened(true);
+          router.replace("/marketplace", { scroll: false });
+        }, 0);
+        return () => clearTimeout(timer);
       }
     }
   }, [initialProductId, products, productOpened, router]);
@@ -94,7 +96,7 @@ export function MarketplaceGrid({ initialProductId }: MarketplaceGridProps) {
     showToast("Produto excluído.");
   };
 
-  const handleSaveSale = async (sale: Sale, newStock: number) => {
+  const handleSaveSale = async (sale: Sale) => {
     await addSale(sale);
     setSaleProduct(null);
     showToast("Venda registrada com sucesso!");

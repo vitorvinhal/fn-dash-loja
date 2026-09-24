@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Sidebar } from "@/components/layout/sidebar";
 import { TopBar } from "@/components/layout/top-bar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
+import { getErrorMessage } from "@/lib/errors";
 import { LayoutSelector } from "@/components/layout/layout-selector";
 import { motion } from "framer-motion";
 import { useToast } from "@/components/ui/toast";
@@ -15,12 +16,6 @@ import {
   Save, CreditCard, Percent, DollarSign, Calendar
 } from "lucide-react";
 import { APP_VERSION } from "@/lib/version";
-
-const LOG_PREFIX = "[CONFIG]";
-function log(msg: string, data?: unknown) {
-  if (data !== undefined) console.log(`${LOG_PREFIX} ${msg}`, data);
-  else console.log(`${LOG_PREFIX} ${msg}`);
-}
 
 export default function ConfiguracoesPage() {
   const { profile, updateProfile, refreshProfile } = useAuth();
@@ -55,6 +50,8 @@ export default function ConfiguracoesPage() {
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [changingPassword, setChangingPassword] = useState(false);
 
+  // Hydração controlada do formulário a partir do profile (fonte externa/assíncrona).
+  /* eslint-disable react-hooks/set-state-in-effect, react-hooks/immutability, react-hooks/exhaustive-deps */
   useEffect(() => {
     if (profile) {
       setUsername(profile.username || "");
@@ -65,11 +62,12 @@ export default function ConfiguracoesPage() {
         relatorios: profile.notifications?.relatorios ?? false,
       });
       if (profile.settings) {
-        setSettings(profile.settings);
+        setSettings({ ...profile.settings });
         applySettings(profile.settings);
       }
     }
   }, [profile?.id, profile?.avatar, profile?.username, profile?.notifications, profile?.settings]);
+  /* eslint-enable react-hooks/set-state-in-effect, react-hooks/immutability, react-hooks/exhaustive-deps */
 
   const applySettings = (s: typeof settings) => {
     document.documentElement.style.setProperty("--font-size-base", `${s.font_size}px`);
@@ -91,8 +89,8 @@ export default function ConfiguracoesPage() {
       } else {
         showToast("Configurações salvas com sucesso!", "success");
       }
-    } catch (e: any) {
-      showToast("Erro ao salvar: " + (e?.message || ""), "error");
+    } catch (e: unknown) {
+      showToast("Erro ao salvar: " + getErrorMessage(e, ""), "error");
     }
     setSaving(false);
   };
@@ -118,8 +116,8 @@ export default function ConfiguracoesPage() {
       const publicUrl = urlData.publicUrl + "?t=" + Date.now();
       setAvatar(publicUrl);
       showToast("Foto de perfil atualizada!", "success");
-    } catch (err: any) {
-      showToast("Erro ao enviar foto: " + (err.message || "Tente novamente."), "error");
+    } catch (err: unknown) {
+      showToast("Erro ao enviar foto: " + getErrorMessage(err, "Tente novamente."), "error");
     }
     setUploading(false);
   };
@@ -175,8 +173,8 @@ export default function ConfiguracoesPage() {
           setShowPasswordModal(false);
         }, 2000);
       }
-    } catch (e: any) {
-      setPasswordError("Erro ao alterar senha: " + (e?.message || ""));
+    } catch (e: unknown) {
+      setPasswordError("Erro ao alterar senha: " + getErrorMessage(e, ""));
     }
     setChangingPassword(false);
   };
@@ -215,8 +213,8 @@ export default function ConfiguracoesPage() {
       setExportSuccess(true);
       showToast("Backup exportado com sucesso!", "success");
       setTimeout(() => setExportSuccess(false), 3000);
-    } catch (e: any) {
-      showToast("Erro ao exportar: " + (e?.message || ""), "error");
+    } catch (e: unknown) {
+      showToast("Erro ao exportar: " + getErrorMessage(e, ""), "error");
     }
     setExporting(false);
   };

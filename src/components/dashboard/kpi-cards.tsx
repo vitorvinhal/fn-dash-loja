@@ -3,9 +3,8 @@
 import { useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { TrendingUp, TrendingDown, Package, DollarSign, AlertTriangle } from "lucide-react";
+import { TrendingUp, Package, DollarSign, AlertTriangle } from "lucide-react";
 import { useDb } from "@/lib/db-context";
-import { calcUnitProfit } from "@/data/products";
 
 export const KPICards = function KPICards() {
   const { products, sales } = useDb();

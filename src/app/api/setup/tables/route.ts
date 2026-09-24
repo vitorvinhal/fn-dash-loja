@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { NextRequest, NextResponse } from "next/server";
+import { getSupabaseAdmin, requireAdmin } from "@/lib/api-utils";
 
 const TABLES_SQL = `
 -- =============================================
@@ -85,20 +85,12 @@ DO $$ BEGIN
 END $$;
 `;
 
-const FALLBACK_URL = "https://rezvmfcbsossxwynlnce.supabase.co";
-const FALLBACK_ANON_KEY = "sb_publishable_Ng4zcxmxK357tNMpklC_0w_y9JWUh_c";
+export async function GET(request: NextRequest) {
+  const auth = await requireAdmin(request);
+  if (auth.error) return auth.error;
 
-export async function GET() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_URL;
+  const admin = getSupabaseAdmin();
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_ANON_KEY;
-
-  const key = serviceKey || anonKey;
-  if (!key) {
-    return NextResponse.json({ ok: false, message: "Chave Supabase não encontrada" });
-  }
-
-  const admin = createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
 
   const { error: catErr } = await admin.from("categories").select("id").limit(1);
   const categoriesExist = !catErr || !catErr.message?.includes("does not exist");
@@ -110,9 +102,9 @@ export async function GET() {
     return NextResponse.json({ ok: true, tablesExist: true, message: "Tabelas já existem!" });
   }
 
-  if (serviceKey) {
+  if (serviceKey && !categoriesExist && !tagsExist) {
     try {
-      const { error } = await admin.rpc("exec_sql" as any, { sql: TABLES_SQL });
+      const { error } = await admin.rpc("exec_sql", { sql: TABLES_SQL });
       if (!error) {
         return NextResponse.json({ ok: true, tablesExist: true, message: "Tabelas criadas com sucesso!", created: true });
       }
@@ -124,23 +116,20 @@ export async function GET() {
     tablesExist: false,
     message: "Tabelas não encontradas. Execute o SQL no Supabase.",
     sql: TABLES_SQL,
-    supabaseUrl: `${url}/project/_/sql/new`,
+    supabaseUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/project/_/sql/new`,
   });
 }
 
-export async function POST() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_URL;
+export async function POST(request: NextRequest) {
+  const auth = await requireAdmin(request);
+  if (auth.error) return auth.error;
+
+  const admin = getSupabaseAdmin();
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_ANON_KEY;
-
-  const key = serviceKey || anonKey;
-  if (!key) return NextResponse.json({ ok: false, message: "Chave Supabase não encontrada" });
-
-  const admin = createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
 
   if (serviceKey) {
     try {
-      const { error } = await admin.rpc("exec_sql" as any, { sql: TABLES_SQL });
+      const { error } = await admin.rpc("exec_sql", { sql: TABLES_SQL });
       if (!error) {
         return NextResponse.json({ ok: true, message: "Tabelas criadas com sucesso!" });
       }
@@ -151,6 +140,6 @@ export async function POST() {
     ok: false,
     message: "Não foi possível criar automaticamente. Execute o SQL manualmente.",
     sql: TABLES_SQL,
-    supabaseUrl: `${url}/project/_/sql/new`,
+    supabaseUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/project/_/sql/new`,
   });
 }

@@ -28,12 +28,12 @@ export default function LoginPage() {
     setError("");
     setSuccess("");
     setLoading(true);
-    const result = isLogin
+    const result: { error?: string; success?: string } = isLogin
       ? await signIn(email, password)
       : await signUp(email, password, username);
     setLoading(false);
     if (result.error) { setError(result.error); return; }
-    if ((result as any).success) { setSuccess((result as any).success); return; }
+    if (result.success) { setSuccess(result.success); return; }
     router.push("/");
   };
 

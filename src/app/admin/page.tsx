@@ -6,15 +6,25 @@ import { TopBar } from "@/components/layout/top-bar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/lib/auth-context";
 import { supabase, Profile } from "@/lib/supabase";
+import { getErrorMessage } from "@/lib/errors";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Shield, Users, Loader2, RefreshCw, Trash2, Check, Database,
   Package, ShoppingCart, DollarSign, Activity, Search, Download,
-  Settings, BarChart3, Clock, HardDrive, AlertTriangle, Wrench,
-  Zap, Globe, FileText, RotateCcw, Camera, X, Save, UserCog, Key,
+  Settings, BarChart3, Clock, HardDrive, Wrench,
+  Zap, RotateCcw, Camera, X, Save, UserCog, Key,
   Eye, EyeOff
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+
+async function adminHeaders(): Promise<Record<string, string>> {
+  const { data } = await supabase.auth.getSession();
+  const token = data.session?.access_token;
+  return {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    DATABASE SETUP COMPONENT
@@ -27,7 +37,7 @@ function DatabaseSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
     setStatus("checking");
     setMessage("Verificando tabelas...");
     try {
-      const res = await fetch("/api/setup/tables");
+      const res = await fetch("/api/setup/tables", { headers: await adminHeaders() });
       const data = await res.json();
       if (data.ok && data.tablesExist) {
         setStatus("tablesExist");
@@ -43,13 +53,17 @@ function DatabaseSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
     }
   };
 
-  useEffect(() => { checkTables(); }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => checkTables(), 0);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSetup = async () => {
     setStatus("loading");
     setMessage("Criando tabelas...");
     try {
-      const res = await fetch("/api/setup/tables", { method: "POST" });
+      const res = await fetch("/api/setup/tables", { method: "POST", headers: await adminHeaders() });
       const data = await res.json();
       if (data.ok) {
         setStatus("success");
@@ -178,8 +192,8 @@ function EditUserModal({ profile: p, onClose, onSave }: EditUserModalProps) {
       setAvatar(urlData.publicUrl + "?t=" + Date.now());
       setMessage("Foto atualizada!");
       setMessageType("success");
-    } catch (err: any) {
-      setMessage("Erro ao enviar: " + (err.message || "Tente novamente"));
+    } catch (err: unknown) {
+      setMessage("Erro ao enviar: " + getErrorMessage(err, "Tente novamente"));
       setMessageType("error");
     }
     setUploading(false);
@@ -195,7 +209,7 @@ function EditUserModal({ profile: p, onClose, onSave }: EditUserModalProps) {
         if (newPassword !== confirmPassword) { setMessage("Senhas não coincidem"); setMessageType("error"); setSaving(false); return; }
       }
 
-      const updates: Record<string, any> = {
+      const updates: Record<string, string | boolean | null> = {
         username: username.trim() || null,
         avatar: avatar || null,
         role,
@@ -205,7 +219,7 @@ function EditUserModal({ profile: p, onClose, onSave }: EditUserModalProps) {
       // Use admin API route for email/password changes or profile updates
       const res = await fetch("/api/admin/update-user", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: await adminHeaders(),
         body: JSON.stringify({
           userId: p.id,
           email: email !== p.email ? email : undefined,
@@ -220,8 +234,8 @@ function EditUserModal({ profile: p, onClose, onSave }: EditUserModalProps) {
       setMessageType("success");
       onSave({ ...p, ...updates, email } as Profile);
       setTimeout(() => { onClose(); }, 1500);
-    } catch (err: any) {
-      setMessage("Erro ao salvar: " + (err.message || "Tente novamente"));
+    } catch (err: unknown) {
+      setMessage("Erro ao salvar: " + getErrorMessage(err, "Tente novamente"));
       setMessageType("error");
     }
     setSaving(false);
@@ -401,7 +415,7 @@ export default function AdminPage() {
       const { data, error: q } = await supabase.from("profiles").select("*").order("created_at", { ascending: false });
       if (q) { setError("Erro ao carregar: " + q.message); setProfiles([]); }
       else setProfiles(data || []);
-    } catch (e: any) { setError("Erro de conexão: " + (e?.message || "")); setProfiles([]); }
+    } catch (e: unknown) { setError("Erro de conexão: " + getErrorMessage(e, "")); setProfiles([]); }
     setLoading(false);
   }
 
@@ -427,7 +441,7 @@ export default function AdminPage() {
       const { error } = await supabase.from("profiles").update({ role: newRole, updated_at: new Date().toISOString() }).eq("id", p.id);
       if (error) alert("Erro ao alterar cargo: " + error.message);
       else setProfiles((prev) => prev.map((x) => (x.id === p.id ? { ...x, role: newRole } : x)));
-    } catch (e: any) { alert("Erro: " + (e?.message || "")); }
+    } catch (e: unknown) { alert("Erro: " + getErrorMessage(e, "")); }
     setActionLoading(null);
   }
 
@@ -439,7 +453,7 @@ export default function AdminPage() {
       const { error } = await supabase.from("profiles").delete().eq("id", p.id);
       if (error) alert("Erro ao excluir: " + error.message);
       else setProfiles((prev) => prev.filter((x) => x.id !== p.id));
-    } catch (e: any) { alert("Erro: " + (e?.message || "")); }
+    } catch (e: unknown) { alert("Erro: " + getErrorMessage(e, "")); }
     setActionLoading(null);
   }
 
@@ -449,7 +463,7 @@ export default function AdminPage() {
       const { error } = await supabase.from(tableName).delete().neq("id", "00000000-0000-0000-0000-000000000000");
       if (error) alert("Erro: " + error.message);
       else loadTableCounts();
-    } catch (e: any) { alert("Erro: " + (e?.message || "")); }
+    } catch (e: unknown) { alert("Erro: " + getErrorMessage(e, "")); }
   }
 
   async function exportTable(tableName: string) {
@@ -461,7 +475,7 @@ export default function AdminPage() {
       const a = document.createElement("a"); a.href = url;
       a.download = `fn-dash-${tableName}-${new Date().toISOString().slice(0, 10)}.json`;
       a.click(); URL.revokeObjectURL(url);
-    } catch (e: any) { alert("Erro ao exportar: " + (e?.message || "")); }
+    } catch (e: unknown) { alert("Erro ao exportar: " + getErrorMessage(e, "")); }
   }
 
   if (profile && profile.role !== "admin") return null;

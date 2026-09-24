@@ -39,10 +39,11 @@ npm run dev
 ## Supabase
 
 - **URL**: `https://rezvmfcbsossxwynlnce.supabase.co`
-- **Anon Key**: configurada em `src/lib/supabase.ts`
+- **Anon Key**: `NEXT_PUBLIC_SUPABASE_ANON_KEY` (env var; definida na Vercel e `.env.local`. Fallback hardcoded existe mas deve ser rotacionado — chave circular em commit público)
+- **Sessão**: cookie `fn-dash-auth-token` via `@supabase/ssr` (guard server-side em `src/proxy.ts`)
 - **Tabelas**: `profiles`, `products`, `sales`, `expenses`, `channels`
 - **Storage bucket**: `avatars` (público, para fotos de perfil)
-- **RLS**:完全 aberto (FOR ALL USING true) para products/sales/expenses
+- **RLS**: aplicado via `supabase_security_hardening.sql` — dados exigem usuário autenticado (dados compartilhados entre a família); aplicar no SQL Editor antes de confiar em produção
 - **Profiles**: salva avatar, notifications, role no banco
 
 ## Convenções

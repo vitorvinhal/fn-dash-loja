@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useMemo } from "react";
-import { Product, ProductVariation, CATEGORIES, CHANNELS, generateSKU, HS_CODES, GST_CODES, SHIPPING_CHANNELS, PRODUCT_CONDITIONS } from "@/data/products";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Save, Plus, ImageIcon, Palette, Package, Check, ChevronDown, ChevronUp, Trash2, Truck, Ruler, Tag, FolderTree } from "lucide-react";
+import { Product, ProductVariation, CHANNELS, generateSKU } from "@/data/products";
+import { motion } from "framer-motion";
+import { X, Save, Plus, ImageIcon, Palette, Package, Check, ChevronDown, ChevronUp, Trash2, Tag, FolderTree } from "lucide-react";
 import { useDb } from "@/lib/db-context";
 
 interface ProductFormModalProps {

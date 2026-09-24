@@ -14,16 +14,38 @@ const COLORS = ["#a78bfa", "#22d3ee", "#fb923c", "#f472b6", "#34d399", "#facc15"
 const TICK_COLOR = "#9ca3af";
 const GRID_COLOR = "#1f2030";
 
-function ChartTooltip({ active, payload, label, fmt }: any) {
+interface TooltipPayloadEntry {
+  value: number | string;
+}
+
+interface ChartTooltipProps {
+  active?: boolean;
+  payload?: TooltipPayloadEntry[];
+  label?: string | number;
+  fmt?: (v: number) => string;
+}
+
+function ChartTooltip({ active, payload, label, fmt }: ChartTooltipProps) {
   if (!active || !payload?.length) return null;
   return (
     <div className="rounded-2xl px-4 py-3 shadow-2xl" style={{ background: "#1a1b2e", border: "1px solid #2a2b3e" }}>
       <p className="text-xs mb-1" style={{ color: "#9ca3af" }}>{label}</p>
-      {payload.map((e: any, i: number) => (
-        <p key={i} className="text-sm font-bold" style={{ color: "#f3f4f6" }}>
-          {fmt ? fmt(e.value) : e.value.toLocaleString("pt-BR")}
-        </p>
-      ))}
+      {payload.map((entry, i) => {
+        const value = Number(entry.value);
+        return (
+          <p key={i} className="text-sm font-bold" style={{ color: "#f3f4f6" }}>
+            {fmt ? fmt(value) : value.toLocaleString("pt-BR")}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
+function EmptyChart() {
+  return (
+    <div className="flex items-center justify-center h-[300px] text-muted-foreground text-sm">
+      Adicione produtos e vendas para ver os gráficos
     </div>
   );
 }
@@ -65,12 +87,6 @@ export const SalesCharts = function SalesCharts() {
   }, [products, sales]);
 
   const tickStyle = { fill: TICK_COLOR, fontSize: 12, fontFamily: "Inter, system-ui, sans-serif" };
-
-  const EmptyChart = () => (
-    <div className="flex items-center justify-center h-[300px] text-muted-foreground text-sm">
-      Adicione produtos e vendas para ver os gráficos
-    </div>
-  );
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

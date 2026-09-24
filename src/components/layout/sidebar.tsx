@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -34,6 +34,7 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { profile, signOut } = useAuth();
   const { categories } = useDb();
@@ -154,7 +155,7 @@ export function Sidebar() {
                       )}
                       onClick={() => {
                         if (hasChildren) toggleExpand(cat.id);
-                        else window.location.href = `/categorias?cat=${cat.id}`;
+                        else router.push(`/categorias?cat=${cat.id}`);
                       }}
                     >
                       {hasChildren ? (

@@ -7,7 +7,7 @@ import { ChevronRight, ChevronDown, Plus, Pencil, Trash2, Check, X } from "lucid
 
 interface CategoryTreeItemProps {
   category: Category;
-  children: Category[];
+  subCategories: Category[];
   allCategories: Category[];
   expanded: boolean;
   onToggle: () => void;
@@ -19,7 +19,7 @@ interface CategoryTreeItemProps {
 
 export function CategoryTreeItem({
   category,
-  children: subcats,
+  subCategories: subcats,
   allCategories,
   expanded,
   onToggle,
@@ -140,7 +140,7 @@ export function CategoryTreeItem({
                 <CategoryTreeItem
                   key={sub.id}
                   category={sub}
-                  children={allCategories.filter((c) => c.parent_id === sub.id)}
+                  subCategories={allCategories.filter((c) => c.parent_id === sub.id)}
                   allCategories={allCategories}
                   expanded={expanded}
                   onToggle={() => {}}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Trash2, ExternalLink, Wifi, WifiOff } from "lucide-react";
+import { Bell, ExternalLink } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { CirSearch } from "@/components/recursos-prontos/cir-search";
 import { usePathname, useRouter } from "next/navigation";
@@ -30,7 +30,7 @@ export function TopBar({ searchValue = "", onSearchChange }: TopBarProps) {
   const showSearch = SEARCH_ROUTES.some((r) => pathname === r || pathname.startsWith(r + "/"));
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const { sales, products, lastSync, syncStatus, reload, loading } = useDb();
+  const { sales, products, syncStatus, reload } = useDb();
 
   const notifications = useMemo<Notif[]>(() => {
     const list: Notif[] = [];
@@ -89,10 +89,6 @@ export function TopBar({ searchValue = "", onSearchChange }: TopBarProps) {
     router.push(notif.link);
     setOpen(false);
   };
-
-  const syncLabel = lastSync
-    ? `Sync: ${lastSync.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`
-    : "Sync: local";
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-background/80 glass flex items-center justify-between pl-14 pr-4 md:px-6 gap-3">

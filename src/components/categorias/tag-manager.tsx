@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDb } from "@/lib/db-context";
 import { Tag } from "@/lib/supabase";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Pencil, Trash2, Check, X, Loader2, Tag as TagIcon, AlertTriangle, Copy, ExternalLink } from "lucide-react";
+import { Plus, Pencil, Trash2, Check, X, Loader2, Tag as TagIcon } from "lucide-react";
 
 const TAG_COLORS = [
   "#6366f1", "#a855f7", "#ec4899", "#ef4444", "#f97316",

@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import { useDb } from "@/lib/db-context";
-import { Category, Tag } from "@/lib/supabase";
 import { CategoryTreeItem } from "./category-tree-item";
 import { TagManager } from "./tag-manager";
 import { motion, AnimatePresence } from "framer-motion";
@@ -205,7 +204,7 @@ export function CategoryManager() {
               </div>
             ) : (
               categoryTree.map((cat) => (
-                <CategoryTreeItem key={cat.id} category={cat} children={getChildren(cat.id)}
+                <CategoryTreeItem key={cat.id} category={cat} subCategories={getChildren(cat.id)}
                   allCategories={categories} expanded={expandedParents.has(cat.id)}
                   onToggle={() => toggleExpand(cat.id)} onUpdate={updateCategory}
                   onDelete={handleDeleteCategory}

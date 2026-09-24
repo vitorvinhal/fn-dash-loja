@@ -1,5 +1,6 @@
 // scripts/bump-version.js
 // Auto-increments patch version on each build
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require("fs");
 const path = require("path");
 

@@ -138,10 +138,13 @@ npm run test:contracts       # apenas os contratos de API (Zod)
 │   │   ├── despesas/           # despesas
 │   │   ├── relatorios/         # relatórios
 │   │   ├── configuracoes/      # configurações
-│   │   ├── admin/              # painel admin
+│   │   ├── admin/              # painel admin (protegido por proxy + role)
 │   │   ├── hero/               # landing
 │   │   ├── estoque/            # alias → /marketplace
+│   │   ├── error.tsx           # error boundary global
+│   │   ├── not-found.tsx       # página 404
 │   │   └── api/                # rotas REST (produtos, vendas, despesas, admin, setup)
+│   ├── proxy.ts                # guard server-side de /admin (convenção do Next 16)
 │   ├── components/
 │   │   ├── dashboard/          # KPI cards, charts, tabelas
 │   │   ├── layout/             # sidebar, top-bar, seletor de layout
@@ -151,12 +154,13 @@ npm run test:contracts       # apenas os contratos de API (Zod)
 │   │   ├── theme/              # provider + toggle de tema
 │   │   └── ui/                 # primitivas shadcn/ui (17 componentes)
 │   ├── lib/
-│   │   ├── supabase.ts         # client + interfaces (Profile, Category, Tag)
+│   │   ├── supabase.ts         # client (@supabase/ssr, sessão em cookie) + interfaces
 │   │   ├── auth-context.tsx    # auth + sync de profile
 │   │   ├── db-context.tsx      # products/sales/expenses + realtime
 │   │   ├── layout-context.tsx  # temas de layout
 │   │   ├── api-utils.ts        # auth, validação, respostas de erro
 │   │   ├── schemas.ts          # schemas Zod
+│   │   ├── errors.ts           # getErrorMessage (erros tipados)
 │   │   ├── export-marketplace.ts # CSV Shopee/TikTok
 │   │   ├── notifications.ts    # push do navegador
 │   │   ├── performance.ts      # métricas web
@@ -238,10 +242,12 @@ na forma `{ id, data, created_at, updated_at }`.
 | `supabase_unified.sql` / `supabase_unified_v2.sql` | Schema unificado |
 | `supabase_fix_recursion.sql` | Corrige recursão em policies |
 | `supabase_fix_profile_realtime.sql` | Habilita realtime em `profiles` |
+| `supabase_security_hardening.sql` | **Requerido** — restringe RLS a usuários autenticados |
 
-> **RLS:** as policies de `products`/`sales`/`expenses` estão amplamente abertas
-> (`FOR ALL USING true`) para leitura no client. Revisar antes de expor dados
-> sensíveis — veja [Segurança](#segurança).
+> **RLS:** a partir da `v3.0.7` foi provida a migração `supabase_security_hardening.sql`
+> que bloqueia acesso anônimo (usuários autenticados da família continuam compartilhando
+> os dados). **Aplicar no SQL Editor do Supabase.** Enquanto não for aplicada, o RLS
+> permanece aberto nas tabelas.
 
 ---
 
@@ -297,12 +303,29 @@ npx vercel --prod --yes
 
 ## Segurança
 
-Pontos de atenção identificados na auditoria — endereçar antes de escalar o uso:
+Estado atual **(v3.0.7)**:
 
-1. **RLS aberto** em `products`/`sales`/`expenses` (`FOR ALL USING true`).
-2. **`/api/admin/update-user` e `/api/setup/tables`** não aplicam `requireAuth`/`requireAdmin`.
-3. **Chave anon hardcoded** em `src/lib/supabase.ts` — prefira `process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-4. **Não commitar** `SUPABASE_SERVICE_ROLE_KEY` ou `.env.test` preenchido.
+1. ✅ **Rotas de admin protegidas**: `/api/admin/update-user` e `/api/setup/tables` exigem
+   `requireAdmin` (Bearer token + role admin); a página de admin envia o token da sessão.
+2. ✅ **Guard server-side**: `src/proxy.ts` redireciona acessos a `/admin` sem cookie de
+   sessão para `/login` (defense-in-depth).
+3. ✅ **Sessão em cookie** via `@supabase/ssr` (`fn-dash-auth-token`).
+4. ✅ **RLS endurecido** pelas policies da migração `supabase_security_hardening.sql`
+   (exige autenticação; gravação no próprio perfil ou por admin; storage de avatares
+   com escrita autenticada).
+5. ✅ **Config via env vars** — `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   definidas na Vercel e `.env.local`.
+6. ⚠️ **Lint**: 0 erros (18 avisos restantes são só sugestões de desempenho `no-img-element`).
+
+**Ação pendente — rotacionar chaves (importante):**
+
+- As chaves **publishable** do Supabase e um token da Vercel circularam em um commit
+  público do histórico. Gere novas:
+  - Vercel: `vercel.com/account/tokens` → novo token; revogue o antigo.
+  - Supabase: `Settings → API` → regenerar a chave `anon/publishable`; atualize
+    `NEXT_PUBLIC_SUPABASE_ANON_KEY` na Vercel (produção/preview) e em `.env.local`.
+- **Usuários existentes:** a sessão migrou de `localStorage` para cookie — é necessário
+  fazer login novamente uma única vez após o deploy.
 
 ---
 

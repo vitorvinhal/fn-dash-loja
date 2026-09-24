@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Sidebar } from "@/components/layout/sidebar";
 import { TopBar } from "@/components/layout/top-bar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +8,7 @@ import { useDb } from "@/lib/db-context";
 import { supabase } from "@/lib/supabase";
 import { PAYMENT_LABELS, PaymentMethod } from "@/data/products";
 import { motion, AnimatePresence } from "framer-motion";
-import { TrendingUp, DollarSign, Package, Trash2, CalendarDays, BarChart3, PieChart as PieIcon, RefreshCw } from "lucide-react";
+import { TrendingUp, DollarSign, Package, Trash2, CalendarDays, BarChart3, PieChart as PieIcon } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { CalendarWidget } from "@/components/recursos-prontos/calendar-widget";
 
@@ -23,16 +23,30 @@ const CHANNEL_COLORS: Record<string, string> = {
   "Online": "#8b5cf6",
 };
 
-function ChartTooltip({ active, payload, label, fmt }: any) {
+interface TooltipPayloadEntry {
+  value: number | string;
+}
+
+interface ChartTooltipProps {
+  active?: boolean;
+  payload?: TooltipPayloadEntry[];
+  label?: string | number;
+  fmt?: (v: number) => string;
+}
+
+function ChartTooltip({ active, payload, label, fmt }: ChartTooltipProps) {
   if (!active || !payload?.length) return null;
   return (
     <div className="rounded-2xl px-4 py-3 shadow-2xl" style={{ background: "#1a1b2e", border: "1px solid #2a2b3e" }}>
       <p className="text-xs mb-1" style={{ color: "#9ca3af" }}>{label}</p>
-      {payload.map((e: any, i: number) => (
-        <p key={i} className="text-sm font-bold" style={{ color: "#f3f4f6" }}>
-          {fmt ? fmt(e.value) : e.value.toLocaleString("pt-BR")}
-        </p>
-      ))}
+      {payload.map((entry, i) => {
+        const value = Number(entry.value);
+        return (
+          <p key={i} className="text-sm font-bold" style={{ color: "#f3f4f6" }}>
+            {fmt ? fmt(value) : value.toLocaleString("pt-BR")}
+          </p>
+        );
+      })}
     </div>
   );
 }
