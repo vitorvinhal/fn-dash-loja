@@ -1,10 +1,18 @@
 "use client";
 
 import { useState, useRef, useMemo } from "react";
-import { Product, calcMargin, calcUnitProfit, CHANNELS } from "@/data/products";
+import { Product, calcMargin, calcUnitProfit, CHANNELS, ProductMeasurements, ProductVariation } from "@/data/products";
 import { motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Edit3, Trash2, ExternalLink, ShoppingCart, Save, Upload, TrendingUp, Package, DollarSign, ImageIcon, Download } from "lucide-react";
 import { useDb } from "@/lib/db-context";
+
+const MEASURE_FIELDS_EDIT: { key: keyof ProductMeasurements; label: string }[] = [
+  { key: "width", label: "Largura" },
+  { key: "length", label: "Comprimento" },
+  { key: "bust", label: "Busto" },
+  { key: "waist", label: "Cintura" },
+  { key: "hip", label: "Quadril" },
+];
 
 interface ProductDetailModalProps {
   product: Product;
@@ -54,6 +62,24 @@ export function ProductDetailModal({ product, onClose, onSave, onDelete, onSale 
 
   const updateField = (field: keyof Product, value: string | number) => {
     setData((d) => ({ ...d, [field]: value }));
+  };
+
+  const updateMeasurement = (key: keyof ProductMeasurements, value: string) => {
+    setData((d) => {
+      const m = { ...(d.measurements || {}) } as ProductMeasurements;
+      const num = Number(value);
+      if (value === "" || Number.isNaN(num)) delete m[key];
+      else (m as Record<string, number>)[key] = num;
+      return { ...d, measurements: m };
+    });
+  };
+
+  const updateVar = (idx: number, field: keyof ProductVariation, value: string | number) => {
+    setData((d) => {
+      const vars = [...(d.variations || [])];
+      if (vars[idx]) vars[idx] = { ...vars[idx], [field]: value };
+      return { ...d, variations: vars };
+    });
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +137,7 @@ export function ProductDetailModal({ product, onClose, onSave, onDelete, onSale 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="absolute inset-0 bg-black/50 glass"
+        className="absolute inset-0 bg-black/70"
         onClick={onClose}
       />
       <motion.div
@@ -122,7 +148,7 @@ export function ProductDetailModal({ product, onClose, onSave, onDelete, onSale 
         className="relative bg-card border border-border rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 bg-card/90 glass border-b border-border px-6 py-4 flex items-center justify-between rounded-t-3xl">
+        <div className="sticky top-0 z-10 bg-card border-b border-border px-6 py-4 flex items-center justify-between rounded-t-3xl shadow-sm">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center">
               <Package className="w-5 h-5 text-muted-foreground" />
@@ -256,12 +282,33 @@ export function ProductDetailModal({ product, onClose, onSave, onDelete, onSale 
               )}
             </div>
 
-            {data.weight ? (
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span>Peso:</span>
-                <span className="text-foreground font-medium bg-secondary px-2 py-0.5 rounded-md">{data.weight} kg</span>
+            <div>
+              <label className="text-muted-foreground text-xs mb-1.5 block">Peso (kg)</label>
+              {editing ? (
+                <input type="number" step="0.01" value={data.weight || ""} onChange={(e) => updateField("weight", Number(e.target.value))} placeholder="0,00" className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
+              ) : (
+                <span className="text-foreground text-sm">{data.weight ? `${data.weight} kg` : "Não informado"}</span>
+              )}
+            </div>
+
+            {/* Medidas */}
+            <div>
+              <label className="text-muted-foreground text-xs mb-1.5 block">Medidas (cm)</label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {MEASURE_FIELDS_EDIT.map(({ key, label }) => (
+                  <div key={key}>
+                    <label className="text-muted-foreground text-[10px] mb-1 block">{label}</label>
+                    {editing ? (
+                      <input type="number" step="0.5" value={(data.measurements || {})[key] ?? ""}
+                        onChange={(e) => updateMeasurement(key, e.target.value)}
+                        placeholder="—" className="w-full bg-secondary border border-border rounded-xl px-3 py-2 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
+                    ) : (
+                      <span className="text-foreground text-sm">{(data.measurements || {})[key] ? `${(data.measurements || {})[key]} cm` : "—"}</span>
+                    )}
+                  </div>
+                ))}
               </div>
-            ) : null}
+            </div>
 
             {/* Variações */}
             {data.variations && data.variations.length > 0 && !editing && (
@@ -274,6 +321,26 @@ export function ProductDetailModal({ product, onClose, onSave, onDelete, onSale 
                       {v.color && <span className="text-foreground font-medium">{v.color}</span>}
                       {v.size && <span className="text-muted-foreground">/ {v.size}</span>}
                       <span className="text-muted-foreground/60">· {v.stock}un</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Editor de variações (modo edição) */}
+            {data.variations && data.variations.length > 0 && editing && (
+              <div>
+                <label className="text-muted-foreground text-xs mb-1.5 block">Variações (cor / tamanho / estoque / preço)</label>
+                <div className="space-y-2">
+                  {data.variations.map((v, i) => (
+                    <div key={i} className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-secondary/30 border border-border rounded-xl p-3 items-center">
+                      <input type="text" value={v.color || ""} onChange={(e) => updateVar(i, "color", e.target.value)} placeholder="Cor" className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-ring" />
+                      <input type="text" value={v.size || ""} onChange={(e) => updateVar(i, "size", e.target.value)} placeholder="Tamanho" className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-ring" />
+                      <input type="number" value={v.stock} onChange={(e) => updateVar(i, "stock", Number(e.target.value))} placeholder="Estoque" className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-ring" />
+                      <input type="number" value={v.amount || 0} onChange={(e) => updateVar(i, "amount", Number(e.target.value))} placeholder="Preço" className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-ring" />
+                      <span className="text-muted-foreground text-[11px] text-center truncate">
+                        {v.sku || "sem SKU"}
+                      </span>
                     </div>
                   ))}
                 </div>

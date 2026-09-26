@@ -1,4 +1,22 @@
-import { Product } from "@/data/products";
+import { Product, ProductVariation } from "@/data/products";
+
+function measurementLabel(v: ProductVariation): string {
+  const m = v.measurements;
+  if (!m) return "";
+  const parts: string[] = [];
+  if (m.width) parts.push(`${m.width}cm larg`);
+  if (m.length) parts.push(`${m.length}cm comp`);
+  if (m.bust) parts.push(`busto ${m.bust}cm`);
+  if (m.waist) parts.push(`cintura ${m.waist}cm`);
+  if (m.hip) parts.push(`quadril ${m.hip}cm`);
+  return parts.join(" | ");
+}
+
+function variantLabel(product: Product, v: ProductVariation): string {
+  const base = [v.size, v.color].filter(Boolean).join(" - ") || "Padrão";
+  const measures = measurementLabel(v);
+  return measures ? `${base} (${measures})` : base;
+}
 
 // =============================================
 // Export to Shopee CSV format
@@ -50,7 +68,7 @@ export function toShopeeCSV(products: Product[]): string {
           String(variation.stock),
           String(product.weight || 0.3),
           variation.image || product.images?.[0] || "",
-          [variation.size, variation.color].filter(Boolean).join(" - ") || "Padrão",
+          variantLabel(product, variation),
           variation.sku || `${product.sku || `SKU-${product.id}`}-${idx + 1}`,
           String(variation.amount || product.amount),
           String(variation.stock),
@@ -129,7 +147,7 @@ export function toTikTokCSV(products: Product[]): string {
           String(variation.amount || product.amount),
           String(variation.stock),
           variation.sku || `${product.sku || `SKU-${product.id}`}-${idx + 1}`,
-          [variation.size, variation.color].filter(Boolean).join(" - ") || "Padrão",
+          variantLabel(product, variation),
           String(variation.amount || product.amount),
           String(variation.stock),
           String((product.weight || 0.3) * 1000),

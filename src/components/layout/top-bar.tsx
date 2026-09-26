@@ -91,7 +91,7 @@ export function TopBar({ searchValue = "", onSearchChange }: TopBarProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-background/80 glass flex items-center justify-between pl-14 pr-4 md:px-6 gap-3">
+    <header className="sticky top-0 z-30 h-16 bg-background border-b border-border flex items-center justify-between pl-14 pr-4 md:px-6 gap-3">
       <div className="flex-1 flex items-center justify-start md:pl-10">
         {showSearch && onSearchChange ? (
           <CirSearch value={searchValue} onChange={onSearchChange} />

@@ -117,6 +117,28 @@ npm run test:visual:update   # atualiza os snapshots visuais
 npm run test:contracts       # apenas os contratos de API (Zod)
 ```
 
+### Importação de catálogo
+
+O sistema inclui scripts de importação em massa que usam a sessão do admin
+(credenciais via env — **nunca** em código):
+
+```bash
+$env:IMPORT_EMAIL = "vitorvinhal90@gmail.com"
+$env:IMPORT_PASSWORD = "<senha>"
+$env:IMPORT_FOLDER = "C:\caminho\das-fotos"
+$env:IMPORT_MANIFESTS = "lote1.json;lote2.json"
+
+# 1) importa/regrava o catálogo (agrupa modelos por cor, upload de fotos no Storage)
+node scripts/import-catalog.js --reset-imported
+# 2) cria a árvore de categorias e remapeia os produtos
+node scripts/setup-categories.js
+```
+
+O manifest é um JSON com `{ products: [ { image, description, details,
+category, weight, sizes, color } ] }`. Fotos são enviadas ao bucket público
+`avatars` (path `produtos/<id>/…`) e salvas como URLs — necessário para o
+**export Shopee/TikTok** e para manter as queries rápidas.
+
 > ⚠️ `npm run build` executa `scripts/bump-version.js`, que incrementa o patch em
 > `src/lib/version.ts`. Não edite esse arquivo manualmente.
 

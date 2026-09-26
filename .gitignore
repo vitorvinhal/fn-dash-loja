@@ -52,3 +52,9 @@ next-env.d.ts
 
 # logs
 *.log
+
+# fotos brutas/de catálogo (as fotos vão pro Supabase Storage via import-catalog)
+/fotos prontas/*
+!/fotos prontas/manifest.json
+/fotos nao prontas/*
+!/fotos nao prontas/manifest.json

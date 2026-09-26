@@ -5,6 +5,39 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ---
 
+## [3.0.8] — 2026-09-26
+
+### Adicionado
+- **Importação do catálogo** (scripts `import-catalog.js` e `setup-categories.js`):
+  **97 produtos** importados a partir das pastas `fotos prontas` e `fotos nao prontas`
+  - Fotos hospedadas no **Supabase Storage** (bucket público `avatars`, path `produtos/…`)
+    como **URLs públicas** — essencial para o export Shopee/TikTok e evita JSONB gigante
+  - Modelos com cores diferentes viraram **variações de cor** do mesmo produto
+  - **Peso em kg** por tipo (médias de mercado) e **tamanhos** P/M/G/GG conforme categoria
+  - Descrições detalhadas por categoria (composição, cores, tamanhos, ocasião)
+- **Árvore de categorias hierárquica**: Feminino, Masculino, Casacos, Maquiagem,
+  Perfumaria, Acessórios e Outros (24 categorias ao todo) + remapeamento automático
+  dos produtos (`categoryId`)
+- **Tamanho e Medidas no formulário**: presets PP–XG + campo livre ("M 5cm de largura") +
+  medidas em cm (largura, comprimento, busto, cintura, quadril) no produto e por variação
+- **Medidas incluídas nos export CSV** Shopee/TikTok (`variantLabel`)
+- **Edição de produto ampliada**: peso, medidas e variações (cor/tamanho/estoque/preço)
+  agora editáveis no modal de detalhes
+- **Scripts utilitários**: `scripts/import-products.js` (single-shot),
+  `scripts/import-catalog.js` (agrupa modelos + Storage) e `scripts/setup-categories.js`
+
+### Corrigido
+- **Transparência removida** dos modais (overlay `bg-black/70`, headers sólidos) e do TopBar
+- **Legibilidade dos `<select>`** em todo o site (fundo sólido + seta custom + options legíveis)
+- **Import agrupava errado** e tratava peso em gramas como kg — corrigido no `import-catalog`
+- **Query de produtos estourava timeout** (base64 no JSONB) → fotos migradas para Storage
+
+### Notas Técnicas
+- Credenciais de importação via env `IMPORT_EMAIL`/`IMPORT_PASSWORD` — nunca em código/git
+- Para rodar de novo: `node scripts/import-catalog.js --reset-imported` + `setup-categories.js`
+
+---
+
 ## [3.0.7] — 2026-09-24
 
 ### Adicionado

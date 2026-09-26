@@ -1,3 +1,11 @@
+export interface ProductMeasurements {
+  width?: number;   // largura (cm)
+  length?: number;  // comprimento (cm)
+  bust?: number;    // busto (cm)
+  waist?: number;   // cintura (cm)
+  hip?: number;     // quadril (cm)
+}
+
 export interface ProductVariation {
   size?: string;
   color?: string;
@@ -9,6 +17,7 @@ export interface ProductVariation {
   cost?: number;
   commissionPct?: number;
   shipping?: number;
+  measurements?: ProductMeasurements;
 }
 
 export interface ProductDimensions {
@@ -48,6 +57,7 @@ export interface Product {
   details?: string;
   size?: string;
   weight?: number;
+  measurements?: ProductMeasurements;
   variations?: ProductVariation[];
   // Shopee / TikTok Shop fields
   hsCode?: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useMemo } from "react";
-import { Product, ProductVariation, CHANNELS, generateSKU } from "@/data/products";
+import { Product, ProductVariation, CHANNELS, generateSKU, ProductMeasurements } from "@/data/products";
 import { motion } from "framer-motion";
 import { X, Save, Plus, ImageIcon, Palette, Package, Check, ChevronDown, ChevronUp, Trash2, Tag, FolderTree } from "lucide-react";
 import { useDb } from "@/lib/db-context";
@@ -30,9 +30,18 @@ const PRESET_COLORS = [
 
 const PRESET_SIZES = ["PP", "P", "M", "G", "GG", "XG", "36", "38", "40", "42", "44", "46", "Único"];
 
+const MEASURE_FIELDS: { key: keyof ProductMeasurements; label: string }[] = [
+  { key: "width", label: "Largura (cm)" },
+  { key: "length", label: "Comprimento (cm)" },
+  { key: "bust", label: "Busto (cm)" },
+  { key: "waist", label: "Cintura (cm)" },
+  { key: "hip", label: "Quadril (cm)" },
+];
+
 const newVar = (): ProductVariation => ({
   size: "", color: "", colorHex: "#000000", stock: 0, sku: "",
   amount: 0, cost: 0, commissionPct: 0, shipping: 0,
+  measurements: {},
 });
 
 export function ProductFormModal({ onClose, onSave, userName, userAvatar }: ProductFormModalProps) {
@@ -127,6 +136,28 @@ export function ProductFormModal({ onClose, onSave, userName, userAvatar }: Prod
     });
   };
 
+  const updateVarMeasurement = (idx: number, key: keyof ProductMeasurements, value: string) => {
+    setData((d) => {
+      const vars = [...(d.variations || [])];
+      const m = { ...(vars[idx].measurements || {}) } as ProductMeasurements;
+      const num = Number(value);
+      if (value === "" || Number.isNaN(num)) delete m[key];
+      else (m as Record<string, number>)[key] = num;
+      vars[idx] = { ...vars[idx], measurements: m };
+      return { ...d, variations: vars };
+    });
+  };
+
+  const measurementsLabel = (v: ProductVariation) => {
+    const m = v.measurements || {};
+    const parts: string[] = [];
+    for (const { key, label } of MEASURE_FIELDS) {
+      const val = m[key];
+      if (val) parts.push(`${label.replace(" (cm)", "")} ${val}cm`);
+    }
+    return parts.join(" · ");
+  };
+
   const addNewVariation = () => {
     setData((d) => ({ ...d, variations: [...(d.variations || []), newVar()] }));
     setExpandedVar((data.variations?.length || 0));
@@ -158,7 +189,7 @@ export function ProductFormModal({ onClose, onSave, userName, userAvatar }: Prod
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/50 glass" onClick={onClose} />
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/70" onClick={onClose} />
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -167,7 +198,7 @@ export function ProductFormModal({ onClose, onSave, userName, userAvatar }: Prod
         className="relative bg-card border border-border rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 bg-card/90 glass border-b border-border px-6 py-4 flex items-center justify-between rounded-t-3xl">
+        <div className="sticky top-0 z-10 bg-card border-b border-border px-6 py-4 flex items-center justify-between rounded-t-3xl shadow-sm">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
               <Plus className="w-5 h-5 text-accent" />
@@ -333,12 +364,50 @@ export function ProductFormModal({ onClose, onSave, userName, userAvatar }: Prod
                 <PctField label="Comissão (%)" value={data.commissionPct} onChange={(v) => updateField("commissionPct", v)} />
                 <PriceField label="Frete" value={data.shipping} onChange={(v) => updateField("shipping", v)} />
               </div>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 <IntField label="Estoque" value={data.stock} onChange={(v) => updateField("stock", v)} />
                 <IntField label="Estoque Mínimo" value={data.minStock || 0} onChange={(v) => updateField("minStock", v)} />
+              </div>
+              <div>
+                <label className="text-muted-foreground text-xs mb-1.5 block">SKU</label>
+                <input type="text" value={data.sku || ""} onChange={(e) => updateField("sku", e.target.value)} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm font-mono outline-none focus:ring-2 focus:ring-ring" />
+              </div>
+
+              {/* Tamanho e Medidas */}
+              <div className="border border-border rounded-2xl p-4 bg-secondary/20 space-y-3">
+                <div className="flex items-center gap-2">
+                  <Package className="w-4 h-4 text-accent" />
+                  <span className="text-foreground text-sm font-medium">Tamanho e Medidas</span>
+                </div>
                 <div>
-                  <label className="text-muted-foreground text-xs mb-1.5 block">SKU</label>
-                  <input type="text" value={data.sku || ""} onChange={(e) => updateField("sku", e.target.value)} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm font-mono outline-none focus:ring-2 focus:ring-ring" />
+                  <label className="text-muted-foreground text-[11px] mb-1 block">Tamanho</label>
+                  <div className="flex flex-wrap gap-1.5 mb-1.5">
+                    {PRESET_SIZES.map((s) => (
+                      <button key={s} type="button" onClick={() => updateField("size", data.size === s ? "" : s)} className={`px-3 py-1 text-xs rounded-lg border transition-colors ${data.size === s ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:border-foreground/30"}`}>
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                  <input type="text" value={data.size || ""} onChange={(e) => updateField("size", e.target.value)} placeholder="Ou digite com medida, ex: M 5cm de largura" className="w-full bg-secondary border border-border rounded-xl px-3 py-2 text-foreground text-xs outline-none focus:ring-2 focus:ring-ring" />
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {MEASURE_FIELDS.map(({ key, label }) => (
+                    <div key={key}>
+                      <label className="text-muted-foreground text-[10px] mb-1 block">{label}</label>
+                      <div className="relative">
+                        <input type="number" step="0.5" value={(data.measurements || {})[key] ?? ""}
+                          onChange={(e) => {
+                            const m = { ...(data.measurements || {}) } as ProductMeasurements;
+                            const num = Number(e.target.value);
+                            if (e.target.value === "" || Number.isNaN(num)) delete m[key];
+                            else (m as Record<string, number>)[key] = num;
+                            setData((d) => ({ ...d, measurements: m }));
+                          }}
+                          placeholder="—" className="w-full bg-secondary border border-border rounded-xl px-3 py-2 text-foreground text-xs outline-none focus:ring-2 focus:ring-ring pr-8" />
+                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground text-[9px]">cm</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -375,9 +444,14 @@ export function ProductFormModal({ onClose, onSave, userName, userAvatar }: Prod
                           {!v.color && !v.size && <span className="text-muted-foreground italic">Variação {i + 1}</span>}
                         </div>
                         <div className="text-[10px] text-muted-foreground flex gap-2 mt-0.5">
+                          <span>{v.size || "Tamanho?"}</span>
+                          {v.color && <span>{v.color}</span>}
                           <span>{v.stock} un.</span>
                           {(v.amount || 0) > 0 && <span>R$ {v.amount!.toFixed(2)}</span>}
                         </div>
+                        {measurementsLabel(v) && (
+                          <div className="text-[9px] text-muted-foreground/80 mt-0.5 truncate">{measurementsLabel(v)}</div>
+                        )}
                       </div>
                       <div className="flex items-center gap-1">
                         <button onClick={(e) => { e.stopPropagation(); duplicateVariation(i); }} className="w-7 h-7 rounded-lg bg-secondary hover:bg-accent flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors" title="Duplicar">
@@ -403,7 +477,20 @@ export function ProductFormModal({ onClose, onSave, userName, userAvatar }: Prod
                               </button>
                             ))}
                           </div>
-                          <input type="text" value={v.size || ""} onChange={(e) => updateVar(i, "size", e.target.value)} placeholder="Ou digite..." className="w-full bg-secondary border border-border rounded-xl px-3 py-2 text-foreground text-xs outline-none focus:ring-2 focus:ring-ring" />
+                          <input type="text" value={v.size || ""} onChange={(e) => updateVar(i, "size", e.target.value)} placeholder="Ou digite com medida, ex: M 5cm de largura" className="w-full bg-secondary border border-border rounded-xl px-3 py-2 text-foreground text-xs outline-none focus:ring-2 focus:ring-ring" />
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 mt-2">
+                            {MEASURE_FIELDS.map(({ key, label }) => (
+                              <div key={key}>
+                                <label className="text-muted-foreground text-[9px] mb-0.5 block">{label}</label>
+                                <div className="relative">
+                                  <input type="number" step="0.5" value={(v.measurements || {})[key] ?? ""}
+                                    onChange={(e) => updateVarMeasurement(i, key, e.target.value)}
+                                    placeholder="—" className="w-full bg-secondary border border-border rounded-lg px-2 py-1.5 text-foreground text-[11px] outline-none focus:ring-2 focus:ring-ring pr-7" />
+                                  <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-muted-foreground text-[8px]">cm</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
 
                         {/* Cor */}

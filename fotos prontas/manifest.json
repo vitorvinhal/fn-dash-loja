@@ -1,0 +1,708 @@
+{
+  "products": [
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.07 (1).jpeg",
+      "description": "Vestido Longo Texturizado Terracota",
+      "details": "Vestido longo texturizado feminino. Decote em V, alças finas, cintura marcada, tecido texturizado, fenda frontal. Cor terracota. Modelo elegante e feminino, perfeito para look sofisticado e confortável.",
+      "category": "Vestidos",
+      "condition": "new",
+      "weight": 450
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.07.jpeg",
+      "description": "Vestido Longo Texturizado Preto",
+      "details": "Vestido longo texturizado feminino. Decote em V, alças finas, cintura marcada, tecido texturizado, fenda frontal. Cor preta. Modelo elegante e feminino, perfeito para look sofisticado e confortável.",
+      "category": "Vestidos",
+      "condition": "new",
+      "weight": 450
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.08 (1).jpeg",
+      "description": "Conjunto Babados Azul",
+      "details": "Conjunto feminino composto por blusa com babados e amarração frontal, e shorts de cós elástico com amarração e tassell. Tecido leve e confortável, respirável, fácil de combinar. Cor azul. Lançamento. De: R$ 189,90 Por: R$ 59,90.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 350
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.08.jpeg",
+      "description": "Vestido Halter Camadas Laranja",
+      "details": "Vestido feminino estilo halter com camadas. Decote em V, costas abertas com amarração, saia em camadas (tiered), cintura marcada, comprimento midi. Tecido com estampa floral sutil em tom laranja. De: R$ 199,90 Por: R$ 59,90.",
+      "category": "Vestidos",
+      "condition": "new",
+      "weight": 400
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.13.jpeg",
+      "description": "Blusa Tricô Listrada Bege",
+      "details": "Blusa feminina tricô listrado. Gola redonda, manga curta, trama vazada com detalhes de listras brancas. Composição 100% acrílico. Cores disponíveis: caramelo, preto, branco, rosé. Tamanhos P, M, G, GG. Tecido leve, macio, não deforma, durável.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.17 (1).jpeg",
+      "description": "Blusa Básica Multi-Cores",
+      "details": "Blusa básica feminina manga curta. Tecido leve e respirável, toque macio, caimento perfeito, não amassa, fácil de cuidar. Cores disponíveis: preto, vinho, azul bic, rosa, branco. De: R$ 75,00 Por: R$ 49,00 crédito ou R$ 39,99 débito/pix.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 150
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.17 (2).jpeg",
+      "description": "Blusa Sem Manga Rosa",
+      "details": "Blusa sem manga feminina. Decote redondo com detalhe frontal com botão dourado. Tecido leve e respirável, toque macio, caimento solto. Composição 100% poliéster. Cores disponíveis: rosa, verde, azul marinho, preto. Tamanhos P, M, G, GG. Medidas: Busto P 96, M 102, G 108, GG 114; Comprimento P 62, M 63, G 64, GG 65.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 150
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.17.jpeg",
+      "description": "Blusa Tricô Listrada Marrom",
+      "details": "Blusa feminina tricô listrado. Gola redonda, manga curta, listras brancas sobre fundo marrom. Tecido com trama vazada. Cores disponíveis: marrom, preto, azul marinho, bege, off white, verde militar. Tecido leve, macio, confortável.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.18 (1).jpeg",
+      "description": "Blusa Listrada Preta e Branca Manga Capinha",
+      "details": "Blusa feminina básica listrada preta e branca. Decote redondo, manga capinha leve e feminina. Tecido leve, toque macio, caimento soltinho para o dia a dia. Fácil de combinar. Cores disponíveis: preto/branco e bege/branco.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 130
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.18.jpeg",
+      "description": "Blusa Babado Vinho",
+      "details": "Blusa babado feminina. Decote V com babado romântico, manga curta com babado. Tecido leve e respirável, toque macio, caimento solto. Composição 100% poliéster. Cores disponíveis: vinho, verde, azul marinho, preto. Tamanhos P, M, G, GG. Medidas: Busto P 96, M 102, G 108, GG 114; Comprimento P 63, M 64, G 65, GG 66.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 180
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.18 (2).jpeg",
+      "description": "Conjunto 3 Peças Vinho",
+      "details": "Conjunto de 3 peças feminino: blusa manga longa, regata e calça com cós e amarração. Composição 95% poliéster, 5% elastano. Tecido canelado macio e confortável, caimento perfeito com elasticidade, versátil para diversas ocasiões. Cores disponíveis: vinho, preto, azul marinho, bege. Tamanhos G1, G2, G3, G4.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 600
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.18 (3).jpeg",
+      "description": "Camiseta Básica Feminina Roxa",
+      "details": "Camiseta básica feminina. Composição 100% poliéster, tecido leve e respirável. Secagem rápida, ideal para treinos e uso diário. Não amassa, resistente com mais durabilidade. Cores disponíveis: roxo, preto, azul marinho, rosa pink, branco. Tamanhos P, M, G, GG.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 150
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.19 (1).jpeg",
+      "description": "Camiseta Manga Longa Masculina Preta",
+      "details": "Camiseta manga longa masculina. Básica, versátil e indispensável. Composição 100% algodão, malha leve e macia, toque suave. Cimento perfeito, conforto para o dia todo. Algodão premium, respirável, versátil, qualidade garantida com costura reforçada. Cores disponíveis: preto, azul marinho, cinza, branco. Tamanhos P, M, G, GG, XG.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 250
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.19 (2).jpeg",
+      "description": "Camiseta Básica Masculina Branca",
+      "details": "Camiseta básica masculina. Composição 100% algodão, toque macio e respirável. Modelagem clássica que se adapta ao corpo. Algodão premium, respirável, costuras reforçadas para maior resistência. Cores disponíveis: branco, preto, cinza, azul marinho. Tamanhos P, M, G, GG, XG.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.19.jpeg",
+      "description": "Vestido Halter Camadas Verde",
+      "details": "Vestido halter camadas feminino. Decote frente única, costas abertas, saia em camadas, modelagem leve e fluida. Composição 96% poliéster, 4% elastano. Tecido leve, toque suave, caimento perfeito. Cores disponíveis: verde, preto, azul marinho, terracota, bege. Tamanhos P, M, G, GG.",
+      "category": "Vestidos",
+      "condition": "new",
+      "weight": 400
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.20 (1).jpeg",
+      "description": "Blusa Tricô Listrada Multi-Cores",
+      "details": "Blusa tricô listrada feminina. Moderna, leve e confortável. Tricô leve e macio, confortável e respirável, caimento perfeito, versátil para diferentes looks. Cores disponíveis: verde, rosa, preto. Tamanhos P, M, G. REF: 0000.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 180
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.20 (2).jpeg",
+      "description": "Vestido Tricô Listrado Bege",
+      "details": "Vestido tricô listrado feminino. Moderno, confortável e versátil. Tricô canelado, macio e confortável, caimento perfeito, looks casuais e despojados. Cores disponíveis: bege, preto. Tamanhos P, M, G. REF: 0000.",
+      "category": "Vestidos",
+      "condition": "new",
+      "weight": 350
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.20 (3).jpeg",
+      "description": "Short Texturizado Azul Marinho",
+      "details": "Short texturizado masculino/feminino. Tecido texturizado moderno e elegante, leve e confortável, cós elástico com ajuste perfeito, acabamento de qualidade. Cores disponíveis: azul marinho, preto. Tamanhos P, M, G, GG. Versátil, moderno e atemporal.",
+      "category": "Calças",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.20.jpeg",
+      "description": "Colar Resina Design Exclusivo",
+      "details": "Colar feminino em resina com acabamento marmorizado e detalhes dourados. Design moderno e exclusivo. Leve e confortável para usar o dia todo. Composição: resina, metal banhado e cordão sintético. Comprimento aproximado 45 cm + extensor de 5 cm. Cores disponíveis: creme/bege, marrom, cinza.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 50
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.21 (1).jpeg",
+      "description": "Short Texturizado Multi-Cores",
+      "details": "Short texturizado feminino/masculino. Tecido texturizado, moderno e elegante, leve e confortável, cós elástico, qualidade premium. Disponível em 3 cores: azul marinho, preto, verde militar. Toque macio e confortável, leve e respirável, durável e resistente. Perfeito para qualquer ocasião.",
+      "category": "Calças",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.21 (2).jpeg",
+      "description": "Conjunto Rendas e Babados Lingerie",
+      "details": "Conjunto de lingerie feminina com renda e babados. Renda premium, toque macio, sustentação com conforto, detalhes que encantam. Plus size do G1 ao G4 (44/46, 48/50, 52/54, 56/58). Cores disponíveis: vinho, rose, champanhe, verde, off white. Valoriza as curvas, ajuste perfeito, design exclusivo.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 150
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.21.jpeg",
+      "description": "Short Texturizado Azul e Verde",
+      "details": "Short texturizado feminino/masculino. Tecido texturizado, leve e confortável, cós elástico, qualidade premium com acabamento impecável. Cores disponíveis: azul marinho, verde. Tamanhos P, M, G, GG. Versátil, moderno e atemporal.",
+      "category": "Calças",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.22 (1).jpeg",
+      "description": "Calcinha Fio sem Costura P",
+      "details": "Calcinha fio feminina sem costura. Toque macio e leve, sem costura não marca, alta elasticidade e ajuste perfeito, tecido respirável e confortável. Acabamento a laser. Tecido premium com maciez, leveza e respirabilidade. Modelagem fio que valoriza o corpo. Cores disponíveis: vinho, nude/rosa. Tamanho P.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.22.jpeg",
+      "description": "Blusa Tricô Leve Feminina Caramelo",
+      "details": "Blusa feminina tricô leve. Gola redonda, trama vazada com detalhes delicados, acabamento com elástico na barra e mangas. Composição 100% acrílico. Leve e confortável, toque macio, não deforma, durável. Cores disponíveis: caramelo, preto, branco, rosé. Tamanhos P, M, G, GG. Medidas: Busto P 88-92, M 92-96, G 96-100, GG 100-104; Comprimento P 58, M 60, G 62, GG 64.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.23.jpeg",
+      "description": "Boxer Masculina Azul",
+      "details": "Boxer masculina. Tecido macio para o dia todo, respirável com mais frescor, ajuste perfeito com maior liberdade de movimentos, qualidade premium. Costura reforçada, tecido respirável mantém o corpo seco, elástico confortável. Ideal para o dia a dia.",
+      "category": "Calças",
+      "condition": "new",
+      "weight": 100
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.24 (1).jpeg",
+      "description": "Conjunto Lingerie Sutiã no Babado P",
+      "details": "Conjunto de lingerie feminina com sutiã no babado. Babado em renda, conforto extremo com tecidos macios, detalhes que encantam com renda delicada, ajuste perfeito com alças reguláveis e fecho com regulagem. Bojo estruturado. Cores disponíveis: preto, azul marinho, verde militar, vinho, rosa, nude, lilás, branco. Tamanho P (36/38). Busto 84-88 cm, Cintura 64-72 cm, Quadril 90-98 cm.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.24 (2).jpeg",
+      "description": "Blusa de Tricô Leve Marrom",
+      "details": "Blusa de tricô leve feminina. Tricô leve e respirável, toque macio, caimento soltinho, detalhes vazados, versátil. Tamanho P 36/38. Busto 84-92 cm, Cintura 64-72 cm, Quadril 90-98 cm, Comprimento 54 cm. Cores disponíveis: marrom, preto, azul marinho, bege, off white, verde militar. Acabamento premium com gola e barras caneladas.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.24.jpeg",
+      "description": "Calcinha Fio sem Costura Multi-Cores G",
+      "details": "Calcinha fio sem costura. Toque macio e leve, sem costura não marca, alta elasticidade, tecido respirável. Acabamento a laser. Tecido premium. Modelagem fio. Cores: nude, vinho, verde, rosa. Tamanho G.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.25 (1).jpeg",
+      "description": "Boxer Masculina Preta",
+      "details": "Boxer masculina. Tecido macio, conforto para o dia todo, respirável com mais frescor, qualidade premium. Costura reforçada, elástico confortável. Ideal para o dia a dia com conforto, praticidade e estilo.",
+      "category": "Calças",
+      "condition": "new",
+      "weight": 100
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.25.jpeg",
+      "description": "Vestido Tricô Listrado Bege (versão 2)",
+      "details": "Vestido tricô listrado feminino. Moderno, confortável e versátil. Tricô canelado, macio e confortável, caimento perfeito, looks casuais e despojados. Cores disponíveis: bege, preto. Tamanhos P, M, G. REF: 0000.",
+      "category": "Vestidos",
+      "condition": "new",
+      "weight": 350
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.26 (1).jpeg",
+      "description": "Blusa Tricô Leve Marrom (versão 2)",
+      "details": "Blusa de tricô leve feminina. Tricô leve e respirável, toque macio, caimento soltinho, detalhes vazados, versátil. Tamanho P 36/38. Cores disponíveis: marrom, preto, azul marinho, bege, off white, verde militar. Acabamento premium.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.26.jpeg",
+      "description": "Blusa Canelada Multi-Cores",
+      "details": "Blusa canelada feminina com babado delicado nas mangas. Modelagem confortável, malha canelada, leve e confortável, respirável, fácil de combinar, do casual ao elegante. Cores disponíveis: bege, cinza, branco, preto, terracota/rosa. Tamanhos P, M, G, GG.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 170
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.27.jpeg",
+      "description": "Regata Dry Fit Multi-Cores",
+      "details": "Regata dry fit feminina/masculina. Linha fitness. Tecido dry fit respirável e de secagem rápida, leve e confortável, flexível com liberdade total de movimentos, qualidade com acabamento reforçado. Cores disponíveis: preto, branco, azul royal, vinho, rosa pink. Ideal para treinos e atividades.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.28.jpeg",
+      "description": "Regata Decote V Verde Oliva",
+      "details": "Regata feminina decote V. Decote V que valoriza, alças largas para mais conforto, modelagem soltinha, tecido leve e agradável, caimento fluido. Cor verde oliva. Tamanho único (veste do 36 ao 42). Leve e confortável, tecido respirável, fácil de combinar, básica e versátil.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 130
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.29 (1).jpeg",
+      "description": "Conjunto Renda Lilás",
+      "details": "Conjunto de lingerie renda feminina. Renda delicada, detalhes exclusivos, alças ajustáveis, conforto que dura. Modelagem que se adapta ao corpo sem marcar. Cores disponíveis: lilás, preto, branco, rosa. Toque macio, alta qualidade, caimento perfeito, respirável, conforto diário, design sofisticado.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.29 (2).jpeg",
+      "description": "Conjunto Renda Preto",
+      "details": "Conjunto de lingerie renda feminina. Elegância que realça sua essência. Renda delicada com acabamento sofisticado, detalhes exclusivos com lacinho e pingente dourado, conforto e sustentação, caimento perfeito. Cores disponíveis: preto, vinho.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.29.jpeg",
+      "description": "Conjunto Conforto e Estilo Roxo",
+      "details": "Conjunto de lingerie conforto e estilo. Tecido macio para uso diário, detalhes delicados com lacinho e pingente, alças ajustáveis, conforto que dura. Cores disponíveis: roxo, preto. Toque macio, alta qualidade, caimento perfeito, respirável, design moderno.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.30.jpeg",
+      "description": "Velas Aromatizadoras Frascos de Bambu",
+      "details": "Velas aromatizadoras artesanais em frascos de vidro com tampa de bambu. Cera vegetal de alta qualidade, queima limpa e prolongada. Fragrâncias selecionadas: Morango Champanhe (frutal leve), Floral Suave (delicado e aconchegante), Baunilha Cremosa (doce e envolvente). Feitas à mão com amor. Ideais para decoração, relaxamento, presentear, trabalho.",
+      "category": "Perfumes",
+      "condition": "new",
+      "weight": 300
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.31 (1).jpeg",
+      "description": "Conjunto Renda Romântica Rosa",
+      "details": "Conjunto de lingerie renda romântica. Delicado, feminino e irresistível. Sutiã com bojo para sustentação, renda macia com toque suave, calcinha confortável que não marca. Detalhe sofisticado, renda de alta qualidade, acabamento premium. Leve e confortável, realça as curvas, elegância em cada detalhe.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.31.jpeg",
+      "description": "Conjunto Renda Vermelho",
+      "details": "Conjunto de lingerie renda feminina. Beleza que encanta, conforto que abraça. Renda delicada, detalhes exclusivos com pingente dourado, alças ajustáveis, tecido de qualidade macio e durável. Cores disponíveis: vermelho, bege/rosa. Toque macio, alta qualidade, sustentação e conforto, respirável, design sofisticado.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.32 (1).jpeg",
+      "description": "Base Líquida Matte Full Cover ColorNow",
+      "details": "Base líquida matte de longa duração com controle de oleosidade. Cobertura uniforme, acabamento matte, textura leve. Marca ColorNow, 30g. Tomos disponíveis: claro, médio claro, médio, médio escuro, escuro, extra escuro. Preço: R$ 14,99 cada.",
+      "category": "Maquiagem",
+      "condition": "new",
+      "weight": 50
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.32.jpeg",
+      "description": "Conjunto Renda Vinho",
+      "details": "Conjunto de lingerie renda feminina. Elegância e conforto em cada detalhe. Renda delicada com acabamento sofisticado, sustentação e conforto, caimento perfeito, detalhes exclusivos com laço e pingente dourado, acabamento premium. Cores disponíveis: vinho, preto.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.33 (1).jpeg",
+      "description": "Manteiga de Cacau Hidratação e Cor",
+      "details": "Manteiga de cacau labial com óleos naturais. Hidrata e nutre, realça a beleza natural, acabamento suave e brilhante. Com manteiga de cacau para lábios protegidos, nutridos e cheios de vida.",
+      "category": "Maquiagem",
+      "condition": "new",
+      "weight": 15
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.33 (2).jpeg",
+      "description": "Manteigas Labiais Safira Sabores",
+      "details": "Protetor labial Safira com manteiga de cacau. Hidrata e protege, lábios macios e nutridos, aromas irresistíveis. Sabores disponíveis: chocolate, cacau, tutti-frutti, melancia, blueberry, menta, coco, cereja, morango.",
+      "category": "Maquiagem",
+      "condition": "new",
+      "weight": 15
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.33.jpeg",
+      "description": "Batom Classic SPColors",
+      "details": "Batom classic feminino. Textura confortável, acabamento cremoso, cores que combinam com você, hidrata e protege. Marca SPColors. Cores disponíveis em tons de rosa, vinho e terrosos. Para todos os momentos.",
+      "category": "Maquiagem",
+      "condition": "new",
+      "weight": 20
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.34.jpeg",
+      "description": "Regata Canelada Multi-Cores",
+      "details": "Regata canelada feminina. Básica e versátil, perfeita para looks leves e modernos. Tecido macio e respirável, alta elasticidade e conforto, caimento perfeito. Malha canelada, acabamento premium com costuras reforçadas. Cores disponíveis: verde, amarelo, vinho, bege, preto. Tamanhos P, M, G, GG. REF: 85399.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 130
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.35 (1).jpeg",
+      "description": "Conjunto Renda Bege",
+      "details": "Conjunto de lingerie renda feminina. Beleza que encanta, conforto que abraça. Renda sofisticada com detalhes exclusivos e pingente dourado, alças ajustáveis, tecido de qualidade macio e durável. Cores disponíveis: bege, preto, rosa. Toque macio, alta qualidade, sustentação, respirável, design sofisticado.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.35.jpeg",
+      "description": "Calcinha Fio sem Costura M",
+      "details": "Calcinha fio sem costura. Toque macio e leve, sem costura não marca, alta elasticidade, tecido respirável. Acabamento a laser. Tecido premium. Modelagem fio. Cores: nude, vinho, rosa escuro. Tamanho M.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.36 (1).jpeg",
+      "description": "Blusas Essenciais Pérola",
+      "details": "Blusas essenciais femininas com detalhe em pérola. Decote elegante, tecido premium que não amassa, cores versáteis. Toque macio, confortável, fácil de combinar. Cores disponíveis: bege, terracota, vermelho. Qualidade garantida com acabamento impecável e costuras reforçadas. Peça chave no guarda-roupa.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 150
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.36.jpeg",
+      "description": "Calcinha Fio sem Costura Multi-Cores (photo lifestyle)",
+      "details": "Calcinha fio sem costura. Toque macio e leve, sem costura não marca, alta elasticidade, tecido respirável. Acabamento a laser. Tecido premium. Modelagem fio. Cores: nude, vinho, verde, rosa, preto.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.37 (1).jpeg",
+      "description": "Blusa Regata Multi-Cores (photo lifestyle)",
+      "details": "Blusa regata feminina básica. Tecido leve e respirável, toque suave e confortável. Cores disponíveis: rosa, azul, verde.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.37.jpeg",
+      "description": "Blusa Elegante Metal Dourado",
+      "details": "Blusa elegante feminina sem manga. Detalhe em metal com argola dourada, decote gota, tecido premium que não amassa, versátil e prática. Toque macio, leve e confortável. Cores disponíveis: branco, bege, azul claro. Qualidade garantida.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 140
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.38 (1).jpeg",
+      "description": "Blusa Plissada Azul Claro",
+      "details": "Blusa plissada feminina sem manga. Pregas elegantes na frente, tecido premium que não amassa, combina com tudo. Leve e confortável, toque suave, qualidade garantida. Cores disponíveis: azul claro, branco, rosa claro. Versátil e elegante para todos os momentos.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 140
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.38 (2).jpeg",
+      "description": "Blusa Clássica Manga Bufante",
+      "details": "Blusa clássica feminina. Decote gota, manga bufante com leve volume, tecido premium que não amassa. Básica, versátil e atemporal. Leve e confortável, caimento perfeito. Cores disponíveis: preto, rose, rosa claro. Qualidade garantida.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 160
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.38.jpeg",
+      "description": "Blusas Essenciais Pérola Multi-Cores",
+      "details": "Blusas essenciais femininas com detalhe em pérola e decote gota. Tecido premium, não amassa, cores versáteis. Cores disponíveis: pink, marinho, rosa antigo, verde oliva, preto. Toque macio, leve e confortável, qualidade garantida. Peça chave no guarda-roupa.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 150
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.39 (1).jpeg",
+      "description": "Blusa Babado Preto e Vinho",
+      "details": "Blusa babado feminina. Babado delicado, manga leve, tecido premium com caimento perfeito. Leve, confortável e versátil. Cores disponíveis: preto, vinho. Qualidade garantida, peça chave no guarda-roupa.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 170
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.39.jpeg",
+      "description": "Suéter Feminino Trançado",
+      "details": "Suéter feminino com decote V e trançado clássico. Punhos e barra canelados. Composição 100% acrílico. Macio, quentinho e leve, mantém o calor nos dias frios. Cores disponíveis: verde militar, preto. Tamanhos P, M, G, GG. Medidas: Busto P 88-92, M 92-96, G 96-100, GG 100-104; Comprimento P 58, M 60, G 62, GG 64. Lavar à mão, não usar alvejante.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 350
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.40 (1).jpeg",
+      "description": "Regata Básica Multi-Cores",
+      "details": "Regata básica feminina. Decote redondo, malha premium leve, macia e durável, acabamento impecável com costuras reforçadas. Cores disponíveis: rosa, azul, verde. Combina com tudo, perfeita para qualquer ocasião. Peça essencial no guarda-roupa.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.40.jpeg",
+      "description": "Conjunto 3 Peças Preto",
+      "details": "Conjunto de 3 peças feminino: blusa manga longa, regata e calça com cós e amarração. Composição 96% poliéster, 4% elastano. Tecido macio e leve, respirável e flexível. Modelagem que valoriza o corpo. Tamanhos P, M, G, GG (veste do 36 ao 48). Não amassa, não desbota, fácil de combinar.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 600
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.41 (1).jpeg",
+      "description": "Conjunto 3 Peças Verde",
+      "details": "Conjunto de 3 peças feminino: blusa manga longa, regata e calça. Tecido premium macio, leve e flexível. Regata confortável, cós com amarração, cardigan alongado. Toque macio, respirável e confortável para usar o dia todo. Ideal para ficar em casa, passeios, viagens, compras, momentos de lazer.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 600
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.41 (2).jpeg",
+      "description": "Conjunto Conforto que Veste Bem Vinho",
+      "details": "Conjunto de 3 peças feminino: blusa manga longa, regata e calça. Leveza, maciez e elegância. Cimento perfeito que adapta ao corpo, cós com amarração, cobertura que acolhe com cardigan alongado. Tecido premium macio, leve e flexível. Tamanhos G (44-46), GG (48-50). Respirável, flexível, perfeito para o dia a dia.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 600
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.41 (3).jpeg",
+      "description": "Suéter Masculino Trançado",
+      "details": "Suéter masculino com gola V e tricô trabalhado. Toque macio, aquece na medida certa, tricô de qualidade com acabamento reforçado, durável e versátil. Cores disponíveis: preto, verde militar. Tamanhos P, M, G, GG, XG. Medidas: Tórax P 96-100, M 100-104, G 104-108, GG 108-112, XG 112-116. Comprimento P 67, M 69, G 71, GG 73, XG 75.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 400
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.41.jpeg",
+      "description": "Conjunto 3 Peças Preto (versão 2)",
+      "details": "Conjunto de 3 peças feminino: blusa manga longa, regata e calça com cós e amarração. Composição 96% poliéster, 4% elastano. Tecido macio e leve, respirável e flexível. Tamanhos P, M, G, GG. Não amassa, não desbota, fácil de combinar, máximo conforto, tecido leve, ótima elasticidade.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 600
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.42 (1).jpeg",
+      "description": "Conjunto 3 Peças Verde (versão 2)",
+      "details": "Conjunto de 3 peças feminino: blusa manga longa, regata e calça. Tecido premium macio, leve e flexível. Regata confortável, cós com amarração, cardigan alongado. Toque macio, respirável. Ideal para ficar em casa, passeios, viagens, compras, momentos de lazer.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 600
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.42 (2).jpeg",
+      "description": "Conjunto Conforto que Veste Bem Vinho (versão 2)",
+      "details": "Conjunto de 3 peças feminino: blusa manga longa, regata e calça. Leveza, maciez e elegância. Cós com amarração, cardigan alongado. Tecido premium. Tamanhos G (44-46), GG (48-50). Modelagem que se ajusta ao corpo sem marcar.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 600
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.42.jpeg",
+      "description": "Calcinha Tanga Invisível G/GG",
+      "details": "Calcinha tanga feminina. Invisível, leve e confortável. Modelagem que não marca sob a roupa e valoriza as curvas. Tecido premium de microfibra, corte a laser, conforto total. Cores disponíveis: preto, bege, rosa, areia. Tamanhos G (44-46), GG (48-50). Perfeita para uso diário, trabalho, academia, eventos especiais.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.43 (1).jpeg",
+      "description": "Calcinha Tanga Invisível P/M",
+      "details": "Calcinha tanga feminina. Invisível, leve e confortável. Modelagem que não marca sob a roupa. Tecido premium de microfibra, corte a laser, conforto total. Cores disponíveis: preto, bege, rosa, areia. Tamanhos P (36-38), M (40-42). Perfeita para uso diário, trabalho, academia, eventos especiais.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 13.51.43.jpeg",
+      "description": "Calcinha Fio sem Costura M (versão 2)",
+      "details": "Calcinha fio sem costura. Toque macio e leve, sem costura não marca, alta elasticidade, tecido respirável. Acabamento a laser. Tecido premium. Modelagem fio. Cores: nude, vinho, verde, preto, rosa. Tamanho M.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.36 (1).jpeg",
+      "description": "Conjunto Lingerie Renda Delicado",
+      "details": "Conjunto de lingerie feminino em renda delicada. Sutiã com bojo estruturado e regulagem, calcinha de renda com laço e pingente. Composição: poliéster e elastano. Renda macia de toque suave, não marca, alças ajustáveis. Cores disponíveis: preto, vinho, rose, champanhe, verde, off white, lilás, nude.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 120
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.36.jpeg",
+      "description": "Blusa Babado Preto",
+      "details": "Blusa babado feminina em preto. Babado na manga e na barra, decote redondo, tecido leve com toque macio e caimento solto. Peça versátil que combina com calças, saias e vestidos. Lavar à mão ou ciclo delicado, não usar alvejante.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 170
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.37 (1).jpeg",
+      "description": "Blusa Elegante com Detalhe Dourado",
+      "details": "Blusa elegantíssima feminina sem manga com detalhe em metal dourado. Decote gota, argola metálica no ombro. Tecido premium que não amassa, versatile e prática. Toque macio, leve e confortável. Cores disponíveis: branco, bege, azul claro. Qualidade garantida com acabamento impecável e costuras reforçadas.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 140
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.37.jpeg",
+      "description": "Blusa Plissada Azul Claro",
+      "details": "Blusa plissada feminina sem manga em azul claro. Pregas elegantes na frente, decote redondo, tecido premium que não amassa. Leve e confortável, toque suave, combina com tudo. Cores disponíveis: azul claro, branco, rosa claro. Versátil e elegante para todos os momentos.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 140
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.38.jpeg",
+      "description": "Short Texturizado Conforto e Estilo",
+      "details": "Short texturizado de cós elástico. Tecido com textura dielineada, leve e resistente, caimento perfeito. Ideal para o dia a dia, combina com blusas e camisetas. Modelagem confortável que não aperta. Lavar à mão ou em ciclo delicado.",
+      "category": "Calças",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.39 (1).jpeg",
+      "description": "Blusa Listrada Preta e Branca",
+      "details": "Blusa listrada feminina preta e branca. Decote redondo, manga curta, tecido leve e respirável com toque macio. Caimento soltinho, fácil de combinar. Cores disponíveis: preto/branco e bege/branco. Perfeita para o dia a dia.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 130
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.39.jpeg",
+      "description": "Blusa Babado Vinho",
+      "details": "Blusa babado vinho feminina. Babado delicado na manga, decote redondo, tecido leve e respirável. Toque macio, caimento solto, modelagem que valoriza o busto. Combina com calças jeans, shorts e saias. Lavar à mão ou ciclo delicado.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 170
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.41 (1).jpeg",
+      "description": "Blusa Floral Estampada Vermelha",
+      "details": "Blusa feminina estampada floral em tom vermelho. Estampa floral exclusiva, decote redondo, manga curta. Tecido leve e respirável, toque macio, caimento perfeito. Peça versátil para looks frescos de verão. Lavar à mão ou ciclo delicado.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 150
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.41 (2).jpeg",
+      "description": "Calcinha Fio sem Costura G",
+      "details": "Calcinha fio sem costura tamanho G. Toque macio e leve, sem costura não marca sob a roupa, alta elasticidade, tecido respirável. Acabamento a laser nas laterais. Tecido premium. Cores: nude, vinho, verde, rosa, preto.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.41.jpeg",
+      "description": "Vestido Halter Camadas Verde",
+      "details": "Vestido halter camadas feminino em verde. Decote frente única, costas abertas com amarração, saia em camadas, comprimento midi. Composição 96% poliéster, 4% elastano. Tecido leve, toque suave, caimento perfeito. Modelagem fluida e feminina.",
+      "category": "Vestidos",
+      "condition": "new",
+      "weight": 400
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.42 (1).jpeg",
+      "description": "Calcinha Fio sem Costura P",
+      "details": "Calcinha fio sem costura tamanho P. Toque macio e leve, sem costura não marca, alta elasticidade, tecido respirável. Acabamento a laser. Tecido premium. Cores: vinho, nude, rosa, verde.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.42 (2).jpeg",
+      "description": "Calcinha Tanga Invisível G/GG",
+      "details": "Calcinha tanga invisível feminina. Não marca sob a roupa, tecido premium de microfibra, corte a laser, conforto total. Modelagem que valoriza as curvas. Cores: preto, bege, rosa, areia. Tamanhos G (44-46) e GG (48-50). Perfeita para uso diário, trabalho, academia e eventos especiais.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.42.jpeg",
+      "description": "Calcinha Fio sem Costura M",
+      "details": "Calcinha fio sem costura tamanho M. Toque macio e leve, não marca, alta elasticidade, tecido respirável. Acabamento a laser. Tecido premium. Cores: nude, vinho, verde, rosa, preto. Modelagem fio minimalista.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 30
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.43 (1).jpeg",
+      "description": "Suéter Masculino de Tricô",
+      "details": "Suéter masculino em tricô com gola V. Toque macio, aquece na medida certa, tricô trabalhado de qualidade com acabamento reforçado, durável e versátil. Cores disponíveis: preto, verde militar. Tamanhos P ao XG.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 400
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.43 (2).jpeg",
+      "description": "Suéter Feminino de Tricô",
+      "details": "Suéter feminino em tricô com decote V. Punhos e barra canelados, textura trançada clássica. Composição 100% acrílico. Macio, quentinho e leve, mantém o calor nos dias frios. Cores: verde militar, preto. Tamanhos P, M, G, GG. Lavar à mão, não usar alvejante.",
+      "category": "Casacos",
+      "condition": "new",
+      "weight": 350
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.43 (3).jpeg",
+      "description": "Cobertor de Tricô Estrelado",
+      "details": "Cobertor de tricô trançado com textura de estrelas. Toque macio e aconchegante, aquece sem pesar. Composição 100% acrílico. Ideal para noites frias, decoração e presente. Medidas aproximadas 130x150 cm. Lavar à mão ou ciclo delicado, secar à sombra.",
+      "category": "Acessórios",
+      "condition": "new",
+      "weight": 700
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.43.jpeg",
+      "description": "Short Texturizado",
+      "details": "Short texturizado feminino/masculino de cós elástico. Tecido texturizado moderno, leve e confortável, ajuste perfeito. Cores: azul marinho, verde, preto. Tamancos P, M, G, GG. Combina com qualquer blusa ou regata.",
+      "category": "Calças",
+      "condition": "new",
+      "weight": 200
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.44 (1).jpeg",
+      "description": "Calça de Moletom Preta",
+      "details": "Calça de moletom feminina preta. Cós elástico, bolsos laterais, cordão de ajuste. Tecido macio e felpado, quente e confortável, ideal para o inverno e momentos de lazer em casa. Modelagem ampla e confortável. Lavar à máquina em ciclo frio.",
+      "category": "Calças",
+      "condition": "new",
+      "weight": 500
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.44 (2).jpeg",
+      "description": "Blusa Canelada Manga Longa",
+      "details": "Blusa canelada feminina de manga longa. Malha canelada com elasticidade, decote redondo. Toque macio, leve e confortável, não amassa. Perfeita para usar sobre outras peças no inverno. Cores: preto, branco, bege, terracota.",
+      "category": "Camisas",
+      "condition": "new",
+      "weight": 180
+    },
+    {
+      "image": "WhatsApp Image 2026-09-26 at 14.09.44.jpeg",
+      "description": "Bermuda Jeans Masculina",
+      "details": "Bermuda jeans masculina em tom azul. Modelagem reta, cós com passantes e zíper, 5 bolsos. Tecido denim rígido com elasticidade, wash jeans clássico. Resistente e confortável para o dia a dia. Lavar do avesso em água fria para preservar a cor.",
+      "category": "Calças",
+      "condition": "new",
+      "weight": 450
+    }
+  ]
+}
