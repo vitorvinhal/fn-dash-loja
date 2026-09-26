@@ -29,6 +29,10 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 ### Corrigido
 - **Transparência removida** dos modais (overlay `bg-black/70`, headers sólidos) e do TopBar
 - **Legibilidade dos `<select>`** em todo o site (fundo sólido + seta custom + options legíveis)
+- **Modal de edição reorganizado em seções**: Dados Básicos · Tamanho & Medidas ·
+  Classificação · Preço & Estoque · Variações · Envio/Marketplace · Links · Análise de Lucro
+- **Edição ampliada**: condição (novo/usado), tags, hsCode/gstCode, dias de envio,
+  dimensões da embalagem, presets de tamanho com medidas livres ("M 5cm de largura")
 - **Import agrupava errado** e tratava peso em gramas como kg — corrigido no `import-catalog`
 - **Query de produtos estourava timeout** (base64 no JSONB) → fotos migradas para Storage
 

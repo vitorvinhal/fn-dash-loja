@@ -3,7 +3,7 @@
 import { useState, useRef, useMemo } from "react";
 import { Product, calcMargin, calcUnitProfit, CHANNELS, ProductMeasurements, ProductVariation } from "@/data/products";
 import { motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Edit3, Trash2, ExternalLink, ShoppingCart, Save, Upload, TrendingUp, Package, DollarSign, ImageIcon, Download } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Edit3, Trash2, ExternalLink, ShoppingCart, Save, Upload, TrendingUp, Package, DollarSign, ImageIcon, Download, Ruler, Truck, Tag, Palette } from "lucide-react";
 import { useDb } from "@/lib/db-context";
 
 const MEASURE_FIELDS_EDIT: { key: keyof ProductMeasurements; label: string }[] = [
@@ -13,6 +13,32 @@ const MEASURE_FIELDS_EDIT: { key: keyof ProductMeasurements; label: string }[] =
   { key: "waist", label: "Cintura" },
   { key: "hip", label: "Quadril" },
 ];
+
+const SIZE_CHIPS = ["PP", "P", "M", "G", "GG", "XG", "36", "38", "40", "42", "44", "46", "Único"];
+
+function EditSection({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
+  return (
+    <div className="border border-border rounded-2xl overflow-hidden">
+      <div className="flex items-center gap-2 px-4 py-2.5 bg-secondary/40 border-b border-border">
+        <span className="text-accent">{icon}</span>
+        <h4 className="text-foreground text-sm font-semibold">{title}</h4>
+      </div>
+      <div className="p-4 space-y-3">{children}</div>
+    </div>
+  );
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="text-muted-foreground text-xs mb-1.5 block">{label}</label>
+      {children}
+    </div>
+  );
+}
+
+const inputCls =
+  "w-full bg-secondary border border-border rounded-xl px-3 py-2 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring placeholder-muted-foreground/50";
 
 interface ProductDetailModalProps {
   product: Product;
@@ -74,11 +100,28 @@ export function ProductDetailModal({ product, onClose, onSave, onDelete, onSale 
     });
   };
 
+  const updateDimension = (key: "length" | "width" | "height", value: string) => {
+    setData((d) => {
+      const dim = { ...(d.dimensions || {}) };
+      const num = Number(value);
+      if (value === "" || Number.isNaN(num)) delete dim[key];
+      else (dim as Record<string, number>)[key] = num;
+      return { ...d, dimensions: dim };
+    });
+  };
+
   const updateVar = (idx: number, field: keyof ProductVariation, value: string | number) => {
     setData((d) => {
       const vars = [...(d.variations || [])];
       if (vars[idx]) vars[idx] = { ...vars[idx], [field]: value };
       return { ...d, variations: vars };
+    });
+  };
+
+  const toggleTagDetail = (tagId: string) => {
+    setData((d) => {
+      const cur = d.tags || [];
+      return { ...d, tags: cur.includes(tagId) ? cur.filter((t) => t !== tagId) : [...cur, tagId] };
     });
   };
 
@@ -242,73 +285,94 @@ export function ProductDetailModal({ product, onClose, onSave, onDelete, onSale 
           </div>
 
           {/* Right: Info */}
-          <div className="space-y-5">
-            <div>
-              <label className="text-muted-foreground text-xs mb-1.5 block">Nome do Produto</label>
-              {editing ? (
-                <input type="text" value={data.description} onChange={(e) => updateField("description", e.target.value)} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-              ) : (
-                <h3 className="text-foreground font-bold text-xl">{data.description}</h3>
-              )}
-            </div>
-
-            {data.addedBy && (
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span>Adicionado por</span>
-                {data.addedByAvatar ? (
-                  <img src={data.addedByAvatar} alt="" className="w-5 h-5 rounded-full object-cover" />
+          <div className="space-y-4">
+            {/* ===== Dados Básicos ===== */}
+            <EditSection icon={<Package className="w-4 h-4" />} title="Dados Básicos">
+              <Field label="Nome do Produto">
+                {editing ? (
+                  <input type="text" value={data.description} onChange={(e) => updateField("description", e.target.value)} className={inputCls} />
                 ) : (
-                  <span className="w-5 h-5 rounded-full bg-accent/20 inline-flex items-center justify-center text-accent text-[9px] font-bold">{(data.addedBy || "U").charAt(0).toUpperCase()}</span>
+                  <h3 className="text-foreground font-bold text-xl">{data.description}</h3>
                 )}
-                <span className="text-foreground font-medium bg-secondary px-2 py-0.5 rounded-md">{data.addedBy}</span>
+              </Field>
+
+              {data.addedBy && !editing && (
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>Adicionado por</span>
+                  {data.addedByAvatar ? (
+                    <img src={data.addedByAvatar} alt="" className="w-5 h-5 rounded-full object-cover" />
+                  ) : (
+                    <span className="w-5 h-5 rounded-full bg-accent/20 inline-flex items-center justify-center text-accent text-[9px] font-bold">{(data.addedBy || "U").charAt(0).toUpperCase()}</span>
+                  )}
+                  <span className="text-foreground font-medium bg-secondary px-2 py-0.5 rounded-md">{data.addedBy}</span>
+                </div>
+              )}
+
+              <Field label="Descrição / Detalhes">
+                {editing ? (
+                  <textarea value={data.details || ""} onChange={(e) => updateField("details", e.target.value)} rows={4} className={`${inputCls} resize-none`} placeholder="Descrição completa para Shopee/TikTok: tecido, caimento, composição, ocasião..." />
+                ) : (
+                  <p className="text-foreground/80 text-sm">{data.details || "Sem descrição"}</p>
+                )}
+              </Field>
+            </EditSection>
+
+            {/* ===== Tamanho & Medidas ===== */}
+            <EditSection icon={<Ruler className="w-4 h-4" />} title="Tamanho & Medidas">
+              <Field label="Tamanho">
+                {editing ? (
+                  <>
+                    <div className="flex flex-wrap gap-1.5 mb-1.5">
+                      {SIZE_CHIPS.map((s) => (
+                        <button key={s} type="button" onClick={() => updateField("size", data.size === s ? "" : s)} className={`px-3 py-1 text-xs rounded-lg border transition-colors ${data.size === s ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:border-foreground/30"}`}>
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                    <input type="text" value={data.size || ""} onChange={(e) => updateField("size", e.target.value)} placeholder="Ou digite com medida, ex: M 5cm de largura" className={inputCls} />
+                  </>
+                ) : (
+                  <span className="text-foreground text-sm">{data.size || "Não informado"}</span>
+                )}
+              </Field>
+
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Peso (kg)">
+                  {editing ? (
+                    <input type="number" step="0.01" value={data.weight || ""} onChange={(e) => updateField("weight", Number(e.target.value))} placeholder="0,00" className={inputCls} />
+                  ) : (
+                    <span className="text-foreground text-sm">{data.weight ? `${data.weight} kg` : "Não informado"}</span>
+                  )}
+                </Field>
+                <Field label="Condição">
+                  {editing ? (
+                    <select value={data.condition || "new"} onChange={(e) => updateField("condition", e.target.value)} className={`${inputCls} pr-9`}>
+                      <option value="new">Novo</option>
+                      <option value="used">Usado</option>
+                    </select>
+                  ) : (
+                    <span className="text-foreground text-sm">{data.condition === "used" ? "Usado" : "Novo"}</span>
+                  )}
+                </Field>
               </div>
-            )}
 
-            <div>
-              <label className="text-muted-foreground text-xs mb-1.5 block">Descrição / Detalhes</label>
-              {editing ? (
-                <textarea value={data.details || ""} onChange={(e) => updateField("details", e.target.value)} rows={3} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring resize-none" />
-              ) : (
-                <p className="text-foreground/80 text-sm">{data.details || "Sem descrição"}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="text-muted-foreground text-xs mb-1.5 block">Tamanho</label>
-              {editing ? (
-                <input type="text" value={data.size || ""} onChange={(e) => updateField("size", e.target.value)} placeholder="P, M, G, 38, Único" className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-              ) : (
-                <span className="text-foreground text-sm">{data.size || "Não informado"}</span>
-              )}
-            </div>
-
-            <div>
-              <label className="text-muted-foreground text-xs mb-1.5 block">Peso (kg)</label>
-              {editing ? (
-                <input type="number" step="0.01" value={data.weight || ""} onChange={(e) => updateField("weight", Number(e.target.value))} placeholder="0,00" className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-              ) : (
-                <span className="text-foreground text-sm">{data.weight ? `${data.weight} kg` : "Não informado"}</span>
-              )}
-            </div>
-
-            {/* Medidas */}
-            <div>
-              <label className="text-muted-foreground text-xs mb-1.5 block">Medidas (cm)</label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {MEASURE_FIELDS_EDIT.map(({ key, label }) => (
-                  <div key={key}>
-                    <label className="text-muted-foreground text-[10px] mb-1 block">{label}</label>
-                    {editing ? (
-                      <input type="number" step="0.5" value={(data.measurements || {})[key] ?? ""}
-                        onChange={(e) => updateMeasurement(key, e.target.value)}
-                        placeholder="—" className="w-full bg-secondary border border-border rounded-xl px-3 py-2 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-                    ) : (
-                      <span className="text-foreground text-sm">{(data.measurements || {})[key] ? `${(data.measurements || {})[key]} cm` : "—"}</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+              <Field label="Medidas (cm)">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {MEASURE_FIELDS_EDIT.map(({ key, label }) => (
+                    <div key={key}>
+                      <label className="text-muted-foreground text-[10px] mb-1 block">{label}</label>
+                      {editing ? (
+                        <input type="number" step="0.5" value={(data.measurements || {})[key] ?? ""}
+                          onChange={(e) => updateMeasurement(key, e.target.value)}
+                          placeholder="—" className={`${inputCls} text-xs`} />
+                      ) : (
+                        <span className="text-foreground text-sm">{(data.measurements || {})[key] ? `${(data.measurements || {})[key]} cm` : "—"}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </Field>
+            </EditSection>
 
             {/* Variações */}
             {data.variations && data.variations.length > 0 && !editing && (
@@ -327,10 +391,9 @@ export function ProductDetailModal({ product, onClose, onSave, onDelete, onSale 
               </div>
             )}
 
-            {/* Editor de variações (modo edição) */}
+            {/* ===== Variações (modo edição) ===== */}
             {data.variations && data.variations.length > 0 && editing && (
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Variações (cor / tamanho / estoque / preço)</label>
+              <EditSection icon={<Palette className="w-4 h-4" />} title={`Variações (${data.variations.length})`}>
                 <div className="space-y-2">
                   {data.variations.map((v, i) => (
                     <div key={i} className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-secondary/30 border border-border rounded-xl p-3 items-center">
@@ -339,135 +402,174 @@ export function ProductDetailModal({ product, onClose, onSave, onDelete, onSale 
                       <input type="number" value={v.stock} onChange={(e) => updateVar(i, "stock", Number(e.target.value))} placeholder="Estoque" className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-ring" />
                       <input type="number" value={v.amount || 0} onChange={(e) => updateVar(i, "amount", Number(e.target.value))} placeholder="Preço" className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs text-foreground outline-none focus:ring-2 focus:ring-ring" />
                       <span className="text-muted-foreground text-[11px] text-center truncate">
-                        {v.sku || "sem SKU"}
+                        {v.sku || (v.size && v.color ? `${v.size} / ${v.color}` : "sem SKU")}
                       </span>
                     </div>
                   ))}
                 </div>
-              </div>
+              </EditSection>
             )}
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Categoria</label>
-                {editing ? (
-                  <select value={data.categoryId || ""} onChange={(e) => {
-                    const catId = e.target.value;
-                    const cat = categories.find((c) => c.id === catId);
-                    setData((d) => ({ ...d, categoryId: catId, category: cat?.name || d.category }));
-                  }} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none">
-                    <option value="">Selecionar...</option>
-                    {categoryTree.map((c) => (
-                      <option key={c.id} value={c.id}>{"".padEnd(c.depth * 2, "\u00A0")}{c.icon} {c.fullName}</option>
-                    ))}
-                  </select>
-                ) : (
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-secondary text-muted-foreground text-xs font-medium rounded-md border border-border">
-                    {currentCategory?.icon && <span>{currentCategory.icon}</span>}
-                    {currentCategory?.name || data.category}
-                  </span>
-                )}
-              </div>
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Canal</label>
-                {editing ? (
-                  <select value={data.channel} onChange={(e) => updateField("channel", e.target.value)} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none">
-                    {CHANNELS.map((c) => (<option key={c} value={c}>{c}</option>))}
-                  </select>
-                ) : (
-                  <span className="text-foreground text-sm">{data.channel}</span>
-                )}
-              </div>
-            </div>
-
-            {/* Tags */}
-            {productTags.length > 0 && !editing && (
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Tags</label>
-                <div className="flex flex-wrap gap-1.5">
-                  {productTags.map((tag) => tag && (
-                    <span key={tag.id} className="px-2 py-0.5 rounded-md text-[10px] font-medium border border-border/50" style={{ background: `${tag.color}15`, color: tag.color }}>
-                      {tag.name}
+            {/* ===== Classificação ===== */}
+            <EditSection icon={<Tag className="w-4 h-4" />} title="Classificação">
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Categoria">
+                  {editing ? (
+                    <select value={data.categoryId || ""} onChange={(e) => {
+                      const catId = e.target.value;
+                      const cat = categories.find((c) => c.id === catId);
+                      setData((d) => ({ ...d, categoryId: catId, category: cat?.name || d.category }));
+                    }} className={`${inputCls} pr-9`}>
+                      <option value="">Selecionar...</option>
+                      {categoryTree.map((c) => (
+                        <option key={c.id} value={c.id}>{"".padEnd(c.depth * 2, "\u00A0")}{c.icon} {c.fullName}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-secondary text-muted-foreground text-xs font-medium rounded-md border border-border">
+                      {currentCategory?.icon && <span>{currentCategory.icon}</span>}
+                      {currentCategory?.name || data.category}
                     </span>
-                  ))}
-                </div>
+                  )}
+                </Field>
+                <Field label="Canal">
+                  {editing ? (
+                    <select value={data.channel} onChange={(e) => updateField("channel", e.target.value)} className={`${inputCls} pr-9`}>
+                      {CHANNELS.map((c) => (<option key={c} value={c}>{c}</option>))}
+                    </select>
+                  ) : (
+                    <span className="text-foreground text-sm">{data.channel}</span>
+                  )}
+                </Field>
               </div>
+
+              <Field label="Tags">
+                {editing ? (
+                  <div className="flex flex-wrap gap-1.5">
+                    {tags.map((tag) => {
+                      const isSel = (data.tags || []).includes(tag.id);
+                      return (
+                        <button key={tag.id} type="button" onClick={() => toggleTagDetail(tag.id)}
+                          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs transition-colors ${isSel ? "border-accent bg-accent/10 text-accent" : "border-border text-muted-foreground hover:border-foreground/30"}`}>
+                          <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: tag.color }} />
+                          {tag.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-1.5">
+                    {productTags.map((tag) => tag && (
+                      <span key={tag.id} className="px-2 py-0.5 rounded-md text-[10px] font-medium border border-border/50" style={{ background: `${tag.color}15`, color: tag.color }}>
+                        {tag.name}
+                      </span>
+                    ))}
+                    {data.tags && data.tags.length === 0 && <span className="text-muted-foreground text-sm">Sem tags</span>}
+                  </div>
+                )}
+              </Field>
+            </EditSection>
+
+            {/* ===== Preço & Estoque ===== */}
+            <EditSection icon={<DollarSign className="w-4 h-4" />} title="Preço & Estoque">
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Preço de Venda (R$)">
+                  {editing ? (
+                    <input type="number" value={data.amount} onChange={(e) => updateField("amount", Number(e.target.value))} className={inputCls} />
+                  ) : (
+                    <div className="text-2xl font-black text-foreground">
+                      {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(data.amount)}
+                    </div>
+                  )}
+                </Field>
+                <Field label="Custo Unitário (R$)">
+                  {editing ? (
+                    <input type="number" value={data.cost} onChange={(e) => updateField("cost", Number(e.target.value))} className={inputCls} />
+                  ) : (
+                    <div className="text-lg font-bold text-muted-foreground">
+                      {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(data.cost)}
+                    </div>
+                  )}
+                </Field>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Comissão (%)">
+                  {editing ? (
+                    <input type="number" value={data.commissionPct} onChange={(e) => updateField("commissionPct", Number(e.target.value))} className={inputCls} />
+                  ) : (
+                    <span className="text-foreground text-sm">{data.commissionPct}%</span>
+                  )}
+                </Field>
+                <Field label="Frete (R$)">
+                  {editing ? (
+                    <input type="number" value={data.shipping} onChange={(e) => updateField("shipping", Number(e.target.value))} className={inputCls} />
+                  ) : (
+                    <span className="text-foreground text-sm">
+                      {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(data.shipping)}
+                    </span>
+                  )}
+                </Field>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Estoque Atual">
+                  {editing ? (
+                    <input type="number" value={data.stock} onChange={(e) => updateField("stock", Number(e.target.value))} className={inputCls} />
+                  ) : (
+                    <div className={`text-lg font-bold ${isLow ? "text-yellow-500" : "text-foreground"}`}>
+                      {data.stock} unidades
+                    </div>
+                  )}
+                </Field>
+                <Field label="Estoque Mínimo">
+                  {editing ? (
+                    <input type="number" value={data.minStock || 5} onChange={(e) => updateField("minStock", Number(e.target.value))} className={inputCls} />
+                  ) : (
+                    <span className="text-foreground text-sm">{data.minStock || 5} unidades</span>
+                  )}
+                </Field>
+              </div>
+
+              <Field label="SKU">
+                {editing ? (
+                  <input type="text" value={data.sku || ""} onChange={(e) => updateField("sku", e.target.value)} className={`${inputCls} font-mono`} />
+                ) : (
+                  <span className="text-foreground text-sm font-mono">{data.sku || "—"}</span>
+                )}
+              </Field>
+            </EditSection>
+
+            {/* ===== Envio / Marketplace (edição) ===== */}
+            {editing && (
+              <EditSection icon={<Truck className="w-4 h-4" />} title="Envio / Marketplace">
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="HS Code (NCM)">
+                    <input type="text" value={data.hsCode || ""} onChange={(e) => updateField("hsCode", e.target.value)} placeholder="Ex: 6204" className={inputCls} />
+                  </Field>
+                  <Field label="GST (%)">
+                    <input type="number" value={data.gstCode || ""} onChange={(e) => updateField("gstCode", e.target.value)} placeholder="Ex: 0, 5, 12" className={inputCls} />
+                  </Field>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Dias para envio">
+                    <input type="number" value={data.daysToShip || 2} onChange={(e) => updateField("daysToShip", Number(e.target.value))} className={inputCls} />
+                  </Field>
+                  <Field label="Dimensões embalagem (C × L × A cm)">
+                    <div className="flex gap-1.5 items-center">
+                      {(["length", "width", "height"] as const).map((k) => (
+                        <input key={k} type="number" value={data.dimensions?.[k] ?? ""}
+                          onChange={(e) => updateDimension(k, e.target.value)}
+                          placeholder={k === "length" ? "C" : k === "width" ? "L" : "A"}
+                          className={`${inputCls} text-xs`} />
+                      ))}
+                    </div>
+                  </Field>
+                </div>
+              </EditSection>
             )}
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Preço de Venda (R$)</label>
-                {editing ? (
-                  <input type="number" value={data.amount} onChange={(e) => updateField("amount", Number(e.target.value))} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-                ) : (
-                  <div className="text-2xl font-black text-foreground">
-                    {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(data.amount)}
-                  </div>
-                )}
-              </div>
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Custo Unitário (R$)</label>
-                {editing ? (
-                  <input type="number" value={data.cost} onChange={(e) => updateField("cost", Number(e.target.value))} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-                ) : (
-                  <div className="text-lg font-bold text-muted-foreground">
-                    {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(data.cost)}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Comissão (%)</label>
-                {editing ? (
-                  <input type="number" value={data.commissionPct} onChange={(e) => updateField("commissionPct", Number(e.target.value))} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-                ) : (
-                  <span className="text-foreground text-sm">{data.commissionPct}%</span>
-                )}
-              </div>
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Frete (R$)</label>
-                {editing ? (
-                  <input type="number" value={data.shipping} onChange={(e) => updateField("shipping", Number(e.target.value))} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-                ) : (
-                  <span className="text-foreground text-sm">
-                    {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(data.shipping)}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Estoque Atual</label>
-                {editing ? (
-                  <input type="number" value={data.stock} onChange={(e) => updateField("stock", Number(e.target.value))} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-                ) : (
-                  <div className={`text-lg font-bold ${isLow ? "text-yellow-500" : "text-foreground"}`}>
-                    {data.stock} unidades
-                  </div>
-                )}
-              </div>
-              <div>
-                <label className="text-muted-foreground text-xs mb-1.5 block">Estoque Mínimo</label>
-                {editing ? (
-                  <input type="number" value={data.minStock || 5} onChange={(e) => updateField("minStock", Number(e.target.value))} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm outline-none focus:ring-2 focus:ring-ring" />
-                ) : (
-                  <span className="text-foreground text-sm">{data.minStock || 5} unidades</span>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <label className="text-muted-foreground text-xs mb-1.5 block">SKU</label>
-              {editing ? (
-                <input type="text" value={data.sku || ""} onChange={(e) => updateField("sku", e.target.value)} className="w-full bg-secondary border border-border rounded-xl px-4 py-2.5 text-foreground text-sm font-mono outline-none focus:ring-2 focus:ring-ring" />
-              ) : (
-                <span className="text-foreground text-sm font-mono">{data.sku || "—"}</span>
-              )}
-            </div>
-
+            {/* ===== Links de Venda ===== */}
             <div className="space-y-2">
               <label className="text-muted-foreground text-xs block">Links de Venda</label>
               {editing ? (
